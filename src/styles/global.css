@@ -1,0 +1,78 @@
+/* AgroTe · Estilos globales */
+
+/* Tokens de diseño exportados desde Figma */
+@import "./tokens.css";
+
+/* Reset mínimo */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+img, picture, video, svg { display: block; max-width: 100%; }
+input, button, textarea, select { font: inherit; color: inherit; }
+button { cursor: pointer; background: none; border: 0; }
+a { color: inherit; }
+
+/* Base */
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-body-m);
+  line-height: var(--text-body-m-lh);
+  color: var(--color-text-primary);
+  background: var(--color-bg-page);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-wrap: balance;
+}
+
+/* Foco visible en todo el sitio */
+:focus-visible {
+  outline: 3px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+
+/* Respeta "reducir movimiento" */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Contenedor: margen 16 → 32 → 120 y ancho máximo 1200 */
+.container {
+  width: 100%;
+  max-width: calc(var(--layout-container) + var(--layout-margin-mobile) * 2);
+  margin-inline: auto;
+  padding-inline: var(--layout-margin-mobile);
+}
+@media (min-width: 768px) {
+  .container { padding-inline: var(--layout-margin-tablet); }
+}
+@media (min-width: 1024px) {
+  .container {
+    max-width: calc(var(--layout-container) + var(--layout-margin-desktop) * 2);
+    padding-inline: var(--layout-margin-desktop);
+  }
+}
+
+/* Un estilo por cada estilo de texto de Figma */
+.text-display-xl { font-family: var(--font-display); font-size: var(--text-display-xl); line-height: var(--text-display-xl-lh); font-weight: 800; }
+.text-display-l  { font-family: var(--font-display); font-size: var(--text-display-l); line-height: var(--text-display-l-lh); font-weight: 800; }
+.text-h1 { font-family: var(--font-display); font-size: var(--text-heading-h1); line-height: var(--text-heading-h1-lh); font-weight: 800; }
+.text-h2 { font-family: var(--font-display); font-size: var(--text-heading-h2); line-height: var(--text-heading-h2-lh); font-weight: 800; }
+.text-h3 { font-family: var(--font-display); font-size: var(--text-heading-h3); line-height: var(--text-heading-h3-lh); font-weight: 800; }
+.text-body-l { font-size: var(--text-body-l); line-height: var(--text-body-l-lh); }
+.text-body-s { font-size: var(--text-body-s); line-height: var(--text-body-s-lh); }
+.text-data-l { font-family: var(--font-mono); font-size: var(--text-data-l); line-height: var(--text-data-l-lh); font-weight: 500; }
+.text-data-s { font-family: var(--font-mono); font-size: var(--text-data-s); line-height: var(--text-data-s-lh); }
+
+/* Texto solo para lectores de pantalla */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}

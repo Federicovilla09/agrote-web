@@ -1,16 +1,15 @@
 ---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PruebaReact from "../components/PruebaReact";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Entorno listo">
+  <main class="container" style="padding-block: var(--space-16); display: grid; gap: var(--space-6);">
+    <h1 class="text-display-xl">Del tractor al dron</h1>
+    <p class="text-body-l" style="color: var(--color-text-secondary);">
+      Este texto en Atkinson, el título en Big Shoulders y el dato de abajo en mono.
+    </p>
+    <p class="text-data-l">85 HP · 4 cil. · 12+12</p>
+    <PruebaReact client:load />
+  </main>
+</BaseLayout>

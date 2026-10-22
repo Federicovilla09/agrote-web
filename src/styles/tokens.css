@@ -1,0 +1,114 @@
+/* AgroTe · Tokens de diseño · generado desde Figma (modo UI) */
+:root {
+  /* Color · Primitivos */
+  --color-blue-50: #EEF6FF;  --color-blue-100: #D9EBFF; --color-blue-200: #B5D7FF;
+  --color-blue-300: #84BCFF; --color-blue-400: #4F9BFF; --color-blue-500: #2B7FFF;
+  --color-blue-600: #1466EB; --color-blue-700: #0F51C2; --color-blue-800: #12449B;
+  --color-blue-900: #14397A; --color-blue-950: #0E2350;
+  --color-yellow-50: #FFFCEB;  --color-yellow-100: #FFF6C7; --color-yellow-200: #FFEC8A;
+  --color-yellow-300: #FFDF4D; --color-yellow-400: #FFD024; --color-yellow-500: #F5B800;
+  --color-yellow-600: #D99200; --color-yellow-700: #B36B02; --color-yellow-800: #915308;
+  --color-yellow-900: #77440B;
+  --color-neutral-0: #FFFFFF;   --color-neutral-50: #F6F7F9;  --color-neutral-100: #EDEFF3;
+  --color-neutral-200: #DDE1E8; --color-neutral-300: #C4CAD4; --color-neutral-400: #9AA3B2;
+  --color-neutral-500: #6E7889; --color-neutral-600: #525B6B; --color-neutral-700: #3B4352;
+  --color-neutral-800: #262D3A; --color-neutral-900: #161C27; --color-neutral-950: #0C1018;
+  --color-green-100: #DFF5E6; --color-green-600: #1F8A4C; --color-green-700: #176B3B;
+  --color-red-100: #FDE4E2;   --color-red-600: #D13B2E;   --color-red-700: #A92C22;
+
+  /* Color · Tema (semánticos) — usar estos en los componentes */
+  --color-bg-page: var(--color-neutral-0);
+  --color-bg-subtle: var(--color-neutral-50);
+  --color-bg-muted: var(--color-neutral-100);
+  --color-bg-brand-subtle: var(--color-blue-50);
+  --color-bg-inverse: var(--color-neutral-950);
+  --color-bg-inverse-subtle: var(--color-neutral-900);
+  --color-bg-media: var(--color-blue-950);
+  --color-bg-hover: var(--color-neutral-50);
+  --color-bg-pressed: var(--color-neutral-100);
+  --color-text-primary: var(--color-neutral-900);
+  --color-text-secondary: var(--color-neutral-600);
+  --color-text-brand: var(--color-blue-600);
+  --color-text-inverse: var(--color-neutral-0);
+  --color-text-inverse-secondary: var(--color-neutral-300);
+  --color-border-default: var(--color-neutral-200);
+  --color-border-strong: var(--color-neutral-400);
+  --color-border-focus: var(--color-blue-500);
+  --color-action-primary: var(--color-blue-600);
+  --color-action-primary-hover: var(--color-blue-700);
+  --color-action-primary-pressed: var(--color-blue-800);
+  --color-action-on-primary: var(--color-neutral-0);
+  --color-action-secondary: var(--color-neutral-900);
+  --color-action-accent: var(--color-yellow-300);
+  --color-action-accent-hover: var(--color-yellow-400);
+  --color-action-accent-pressed: var(--color-yellow-500);
+  --color-action-on-accent: var(--color-neutral-950);
+  --color-action-disabled: var(--color-neutral-100);
+  --color-action-on-disabled: var(--color-neutral-400);
+  --color-icon-default: var(--color-neutral-900);
+  --color-icon-secondary: var(--color-neutral-500);
+  --color-icon-inverse: var(--color-neutral-0);
+  --color-placeholder-fill: var(--color-neutral-100);
+  --color-placeholder-line: var(--color-neutral-300);
+  --color-skeleton-base: var(--color-neutral-100);
+  --color-skeleton-highlight: var(--color-neutral-50);
+  --color-feedback-success: var(--color-green-600);
+  --color-feedback-success-subtle: var(--color-green-100);
+  --color-feedback-error: var(--color-red-600);
+  --color-feedback-error-subtle: var(--color-red-100);
+
+  /* Espaciado (base 4 px) */
+  --space-0: 0;        --space-1: 0.25rem;  --space-2: 0.5rem;   --space-3: 0.75rem;
+  --space-4: 1rem;     --space-5: 1.25rem;  --space-6: 1.5rem;   --space-8: 2rem;
+  --space-10: 2.5rem;  --space-12: 3rem;    --space-16: 4rem;    --space-20: 5rem;
+  --space-24: 6rem;    --space-30: 7.5rem;
+
+  /* Layout y grilla */
+  --layout-container: 1200px;
+  --layout-margin-mobile: 16px;  --layout-gap-mobile: 16px;  --layout-columns-mobile: 4;
+  --layout-margin-tablet: 32px;  --layout-gap-tablet: 24px;  --layout-columns-tablet: 8;
+  --layout-margin-desktop: 120px; --layout-gap-desktop: 24px; --layout-columns-desktop: 12;
+  /* Breakpoints de referencia: 390 · 768 · 1440 (usar en media queries: 768px y 1024px) */
+
+  /* Radios */
+  --radius-none: 0; --radius-xs: 4px; --radius-sm: 8px; --radius-md: 12px;
+  --radius-lg: 16px; --radius-xl: 20px; --radius-full: 9999px;
+
+  /* Tipografía · familias */
+  --font-display: "Big Shoulders Display", "Arial Narrow", sans-serif;
+  --font-body: "Atkinson Hyperlegible", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  /* Tipografía · escala mobile (por defecto) */
+  --text-display-xl: 4rem;     --text-display-xl-lh: 0.92;  --text-display-xl-weight: 800;
+  --text-display-l: 3rem;      --text-display-l-lh: 0.95;   --text-display-l-weight: 800;
+  --text-heading-h1: 2.5rem;   --text-heading-h1-lh: 1;     --text-heading-h1-weight: 800;
+  --text-heading-h2: 2rem;     --text-heading-h2-lh: 1.05;  --text-heading-h2-weight: 800;
+  --text-heading-h3: 1.5rem;   --text-heading-h3-lh: 1.1;   --text-heading-h3-weight: 700;
+  --text-body-l: 1.125rem;     --text-body-l-lh: 1.5;       --text-body-l-weight: 400;
+  --text-body-m: 1rem;         --text-body-m-lh: 1.5;       --text-body-m-weight: 400;
+  --text-body-m-bold: 1rem;    --text-body-m-bold-lh: 1.5;  --text-body-m-bold-weight: 700;
+  --text-body-s: 0.875rem;     --text-body-s-lh: 1.45;      --text-body-s-weight: 400;
+  --text-label-button: 1rem;   --text-label-button-lh: 1.2; --text-label-button-weight: 700;
+  --text-data-l: 1rem;         --text-data-l-lh: 1.3;       --text-data-l-weight: 500;
+  --text-data-eyebrow: 0.75rem; --text-data-eyebrow-lh: 1.3; --text-data-eyebrow-weight: 500;
+  --text-data-s: 0.75rem;      --text-data-s-lh: 1.3;       --text-data-s-weight: 400;
+
+  /* Sombras */
+  --shadow-sm: 0 1px 2px rgba(12, 16, 24, 0.06), 0 1px 3px rgba(14, 35, 80, 0.08);
+  --shadow-md: 0 2px 4px rgba(12, 16, 24, 0.06), 0 8px 20px -4px rgba(14, 35, 80, 0.12);
+  --shadow-lg: 0 4px 10px rgba(12, 16, 24, 0.06), 0 24px 48px -8px rgba(14, 35, 80, 0.20);
+}
+
+/* Desktop: la escala tipográfica crece desde 1024 px */
+@media (min-width: 1024px) {
+  :root {
+    --text-display-xl: 7rem;   --text-display-l: 5rem;
+    --text-heading-h1: 3.5rem; --text-heading-h2: 2.5rem; --text-heading-h3: 1.75rem;
+    --text-body-l: 1.25rem;    --text-body-m: 1.125rem;   --text-body-m-bold: 1.125rem;
+    --text-body-s: 1rem;       --text-data-l: 1.125rem;   --text-data-eyebrow: 0.875rem;
+  }
+}
+
+/* Etiquetas sobre títulos (eyebrow) */
+.eyebrow { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; }

@@ -1,0 +1,32 @@
+---
+import "@fontsource/big-shoulders-display/latin-800";
+import "@fontsource/atkinson-hyperlegible/latin-400";
+import "@fontsource/atkinson-hyperlegible/latin-700";
+import "@fontsource/ibm-plex-mono/latin-400";
+import "@fontsource/ibm-plex-mono/latin-500";
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = "Maquinaria, tecnología y posventa para el campo. Prototipo conceptual de rediseño.",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es-AR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0E2350" />
+    <title>{`${title} · AgroTe`}</title>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
