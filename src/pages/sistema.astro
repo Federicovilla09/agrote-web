@@ -1,0 +1,62 @@
+---
+// Página de trabajo: muestra los componentes del sistema para revisarlos.
+// No forma parte del sitio final (no tiene enlaces desde el menú).
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Button from "../components/ui/Button.astro";
+import Icon from "../components/ui/Icon.astro";
+import { icons, type IconName } from "../components/ui/icons";
+
+const variants = ["primary", "secondary", "accent", "light", "link"] as const;
+const iconNames = Object.keys(icons) as IconName[];
+---
+
+<BaseLayout title="Sistema de diseño">
+  <main class="container sistema">
+    <h1 class="text-display-l">Sistema de diseño</h1>
+
+    <section>
+      <h2 class="text-h2">Botón</h2>
+      {variants.map((variant) => (
+        <div class="fila">
+          <span class="text-data-s etiqueta">{variant}</span>
+          <Button variant={variant}>Consultar</Button>
+          <Button variant={variant} icon="flecha-derecha">Ver catálogo</Button>
+          <Button variant={variant} size="sm">Chico</Button>
+          <Button variant={variant} disabled>Deshabilitado</Button>
+        </div>
+      ))}
+      <div class="fila fondo-oscuro">
+        <span class="text-data-s etiqueta">sobre video</span>
+        <Button variant="accent" icon="flecha-derecha">Explorar catálogo</Button>
+        <Button variant="light" icon="chat">Consultar por WhatsApp</Button>
+      </div>
+      <div class="fila">
+        <span class="text-data-s etiqueta">como enlace</span>
+        <Button href="#" variant="primary" icon="chat">Esto es un &lt;a&gt;</Button>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="text-h2">Íconos</h2>
+      <ul class="iconos">
+        {iconNames.map((name) => (
+          <li>
+            <Icon name={name} />
+            <span class="text-data-s">{name}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .sistema { display: grid; gap: var(--space-16); padding-block: var(--space-16); }
+  section { display: grid; gap: var(--space-6); }
+  .fila { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); }
+  .etiqueta { width: 120px; color: var(--color-text-secondary); }
+  .fondo-oscuro { background: var(--color-bg-media); padding: var(--space-6); border-radius: var(--radius-lg); }
+  .fondo-oscuro .etiqueta { color: var(--color-text-inverse-secondary); }
+  .iconos { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: var(--space-4); list-style: none; padding: 0; }
+  .iconos li { display: grid; justify-items: center; gap: var(--space-2); padding: var(--space-4); background: var(--color-bg-subtle); border-radius: var(--radius-md); }
+</style>

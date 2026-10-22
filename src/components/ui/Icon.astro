@@ -1,0 +1,30 @@
+---
+// Icon: dibuja un ícono del set. Toma el color del texto que lo rodea (currentColor).
+import { icons, type IconName } from "./icons";
+
+interface Props {
+  name: IconName;
+  size?: number;
+  /** Solo si el ícono transmite información por sí mismo (sin texto al lado). */
+  label?: string;
+  class?: string;
+}
+
+const { name, size = 24, label, class: className } = Astro.props;
+---
+
+<svg
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class={className}
+  role={label ? "img" : undefined}
+  aria-label={label}
+  aria-hidden={label ? undefined : "true"}
+  set:html={icons[name]}
+/>
