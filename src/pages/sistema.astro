@@ -5,6 +5,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Button from "../components/ui/Button.astro";
 import Icon from "../components/ui/Icon.astro";
 import { icons, type IconName } from "../components/ui/icons";
+import Tag from "../components/ui/Tag.astro";
+import DemoControles from "../components/dev/DemoControles";
 
 const variants = ["primary", "secondary", "accent", "light", "link"] as const;
 const iconNames = Object.keys(icons) as IconName[];
@@ -34,6 +36,21 @@ const iconNames = Object.keys(icons) as IconName[];
         <span class="text-data-s etiqueta">como enlace</span>
         <Button href="#" variant="primary" icon="chat">Esto es un &lt;a&gt;</Button>
       </div>
+    </section>
+
+        <section>
+      <h2 class="text-h2">Etiqueta</h2>
+      <div class="fila">
+        <Tag tone="offer">Oferta · Demo</Tag>
+        <Tag tone="neutral">Nuevo</Tag>
+        <Tag tone="dark">Usado</Tag>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="text-h2">Controles de formulario</h2>
+      <p class="text-body-s" style="color: var(--color-text-secondary);">Isla de React: probá los chips, el conmutador, los checkbox y el error del teléfono.</p>
+      <DemoControles client:load />
     </section>
 
     <section>

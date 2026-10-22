@@ -1,0 +1,38 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 36px;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-full);
+  background: var(--color-bg-page);
+  color: var(--color-text-primary);
+  font-family: var(--font-mono);
+  font-size: var(--text-data-s);
+  line-height: var(--text-data-s-lh);
+  white-space: nowrap;
+  transition: background-color 150ms, border-color 150ms, color 150ms;
+}
+
+@media (hover: hover) {
+  .chip:hover { background: var(--color-bg-hover); border-color: var(--color-text-primary); }
+}
+
+/* Activo: aria-pressed (filtro elegido) o chip de filtro aplicado */
+.chip[aria-pressed="true"],
+.active {
+  background: var(--color-action-primary);
+  border-color: var(--color-action-primary);
+  color: var(--color-action-on-primary);
+}
+@media (hover: hover) {
+  .chip[aria-pressed="true"]:hover,
+  .active:hover { background: var(--color-action-primary-hover); }
+}
+
+.chip:disabled {
+  border-color: var(--color-border-default);
+  color: var(--color-action-on-disabled);
+  cursor: not-allowed;
+}

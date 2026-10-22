@@ -1,0 +1,52 @@
+.field { display: grid; gap: var(--space-2); }
+
+.label { font-size: var(--text-body-s); line-height: var(--text-body-s-lh); }
+
+.control {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  width: 100%;
+  min-height: 48px;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-page);
+  color: var(--color-text-primary);
+  font-size: var(--text-body-m);
+  line-height: var(--text-body-m-lh);
+}
+.input::placeholder { color: var(--color-text-secondary); opacity: 1; }
+
+/* Foco: borde grueso azul (reemplaza al anillo global dentro del campo) */
+.input:focus-visible {
+  outline: none;
+  border-color: var(--color-border-focus);
+  box-shadow: 0 0 0 1px var(--color-border-focus);
+}
+
+textarea.input { min-height: 120px; resize: vertical; }
+
+/* Select: ocultamos la flecha nativa y usamos nuestro chevron */
+select.input { appearance: none; padding-right: var(--space-12); cursor: pointer; }
+.chevron {
+  position: absolute;
+  right: var(--space-4);
+  color: var(--color-icon-secondary);
+  pointer-events: none;
+}
+
+/* Error */
+.input[aria-invalid="true"] { border-color: var(--color-feedback-error); box-shadow: 0 0 0 0.5px var(--color-feedback-error); }
+.error { font-size: var(--text-body-s); line-height: var(--text-body-s-lh); color: var(--color-feedback-error); }
+
+/* Deshabilitado */
+.input:disabled {
+  border-color: var(--color-border-default);
+  background: var(--color-action-disabled);
+  color: var(--color-action-on-disabled);
+  cursor: not-allowed;
+}
