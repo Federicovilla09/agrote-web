@@ -171,7 +171,8 @@ const consultar = whatsappUrl("Hola, quiero hacer una consulta.");
       "scroll",
       () => {
         const actual = window.scrollY;
-        const bajando = actual > ultimoScroll && actual > 200;
+         const animando = document.documentElement.hasAttribute("data-animando");
+        const bajando = actual > ultimoScroll && actual > 200 && !animando;
         header.classList.toggle("oculto", mobile.matches && bajando);
         ultimoScroll = actual;
       },

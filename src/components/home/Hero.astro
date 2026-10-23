@@ -14,9 +14,18 @@ const dron = await optimizar("dron-vuelo", [480]);
 
 <section class="hero" data-hero aria-labelledby="hero-titulo">
   <!-- Portada: se ve mientras carga el video, o siempre si el video no se reproduce -->
-  {portada && (
-    <img class="fondo" src={portada.src} srcset={portada.srcset} sizes="100vw" alt="" fetchpriority="high" />
-  )}
+  {
+    portada && (
+      <img
+        class="fondo"
+        src={portada.src}
+        srcset={portada.srcset}
+        sizes="100vw"
+        alt=""
+        fetchpriority="high"
+      />
+    )
+  }
   <video
     class="fondo video"
     data-video
@@ -26,8 +35,7 @@ const dron = await optimizar("dron-vuelo", [480]);
     loop
     playsinline
     preload="none"
-    aria-hidden="true"
-  ></video>
+    aria-hidden="true"></video>
   <div class="degradado" aria-hidden="true"></div>
 
   <div class="container contenido">
@@ -35,11 +43,19 @@ const dron = await optimizar("dron-vuelo", [480]);
       <Eyebrow tone="dark">Concesionaria agrícola · Litoral</Eyebrow>
       <h1 id="hero-titulo" class="text-display-xl">Del tractor al dron</h1>
       <p class="text-body-l bajada">
-        Equipamos tu campo y te acompañamos después: maquinaria nueva y usada, tecnología de precisión y posventa.
+        Equipamos tu campo y te acompañamos después: maquinaria nueva y usada,
+        tecnología de precisión y posventa.
       </p>
       <div class="acciones">
-        <Button href="/nuevos/tractores" variant="accent" icon="flecha-derecha">Explorar catálogo</Button>
-        <Button href={whatsappUrl("Hola, quiero hacer una consulta.")} target="_blank" variant="light" icon="chat">
+        <Button href="/nuevos/tractores" variant="accent" icon="flecha-derecha"
+          >Explorar catálogo</Button
+        >
+        <Button
+          href={whatsappUrl("Hola, quiero hacer una consulta.")}
+          target="_blank"
+          variant="light"
+          icon="chat"
+        >
           Consultar por WhatsApp
         </Button>
       </div>
@@ -47,15 +63,26 @@ const dron = await optimizar("dron-vuelo", [480]);
 
     <!-- Tarjeta destacada: solo desktop -->
     <a class="destacada" href="/precision-y-drones">
-      <Foto imagen={dron} alt="" ratio="16 / 9" sizes="268px" class="destacada-foto" />
+      <Foto
+        imagen={dron}
+        alt=""
+        ratio="16 / 9"
+        sizes="268px"
+        class="destacada-foto"
+      />
       <Tag tone="offer">Nuevo</Tag>
       <span class="destacada-titulo">Drones de pulverización y mapeo</span>
-      <span class="destacada-link">Conocer más <Icon name="flecha-derecha" size={18} /></span>
+      <span class="destacada-link"
+        >Conocer más <Icon name="flecha-derecha" size={18} /></span
+      >
     </a>
   </div>
 
   <div class="container controles">
-    <span class="text-data-s">Deslizá para descubrir</span>
+    <button type="button" class="descubrir text-data-s" data-descubrir>
+      Deslizá para descubrir
+      <span class="flecha"><Icon name="chevron-abajo" size={18} /></span>
+    </button>
     <button type="button" class="pausa" data-pausa hidden aria-pressed="false">
       <Icon name="pausa" size={18} label="Pausar video" />
     </button>
@@ -68,16 +95,27 @@ const dron = await optimizar("dron-vuelo", [480]);
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    min-height: min(100svh, 820px);
+    min-height: 100svh; /* la portada ocupa toda la pantalla */
     padding-top: 96px; /* espacio para el header que flota encima */
     overflow: hidden;
     background: var(--color-bg-media);
     color: var(--color-text-inverse);
   }
 
-  .fondo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  .video { opacity: 0; transition: opacity 600ms; }
-  .video.reproduciendo { opacity: 1; }
+  .fondo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .video {
+    opacity: 0;
+    transition: opacity 600ms;
+  }
+  .video.reproduciendo {
+    opacity: 1;
+  }
 
   /* Oscurece arriba (para el header) y abajo (para el texto) */
   .degradado {
@@ -88,13 +126,49 @@ const dron = await optimizar("dron-vuelo", [480]);
       linear-gradient(to top, rgb(12 16 24 / 0.92) 10%, rgb(14 35 80 / 0) 70%);
   }
 
-  .contenido, .controles { position: relative; }
-  .contenido { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-8); }
-  .principal { display: grid; gap: var(--space-4); max-width: 44rem; }
-  .bajada { color: var(--color-text-inverse-secondary); max-width: 36rem; }
-  .acciones { display: grid; gap: var(--space-3); padding-top: var(--space-2); }
+  .contenido,
+  .controles {
+    position: relative;
+  }
+  .fondo,
+  .contenido,
+  .controles {
+    transition:
+      transform 900ms cubic-bezier(0.65, 0, 0.35, 1),
+      opacity 600ms ease;
+  }
+  .hero.abriendo .fondo {
+    transform: scale(1.08);
+  }
+  .hero.abriendo .contenido,
+  .hero.abriendo .controles {
+    transform: translateY(-40px);
+    opacity: 0;
+  }
+  .contenido {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-8);
+  }
+  .principal {
+    display: grid;
+    gap: var(--space-4);
+    max-width: 44rem;
+  }
+  .bajada {
+    color: var(--color-text-inverse-secondary);
+    max-width: 36rem;
+  }
+  .acciones {
+    display: grid;
+    gap: var(--space-3);
+    padding-top: var(--space-2);
+  }
 
-  .destacada { display: none; }
+  .destacada {
+    display: none;
+  }
 
   .controles {
     display: flex;
@@ -113,8 +187,25 @@ const dron = await optimizar("dron-vuelo", [480]);
     color: var(--color-text-inverse);
   }
 
+    .descubrir {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 44px;
+    color: var(--color-text-inverse-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .descubrir:hover { color: var(--color-text-inverse); }
+  /* La flecha "respira" para invitar a bajar (se detiene con reducir movimiento) */
+  .flecha { display: grid; animation: invitar 1.8s ease-in-out infinite; }
+  @keyframes invitar { 50% { transform: translateY(4px); } }
+
   @media (min-width: 768px) {
-    .acciones { display: flex; flex-wrap: wrap; }
+    .acciones {
+      display: flex;
+      flex-wrap: wrap;
+    }
   }
 
   @media (min-width: 1024px) {
@@ -123,7 +214,9 @@ const dron = await optimizar("dron-vuelo", [480]);
         linear-gradient(to bottom, rgb(12 16 24 / 0.5), transparent 25%),
         linear-gradient(to right, rgb(12 16 24 / 0.9), rgb(14 35 80 / 0.15) 65%);
     }
-    .controles { padding-block: var(--space-12); }
+    .controles {
+      padding-block: var(--space-12);
+    }
     .destacada {
       display: grid;
       gap: var(--space-3);
@@ -136,12 +229,33 @@ const dron = await optimizar("dron-vuelo", [480]);
       text-decoration: none;
       justify-items: start;
     }
-    .destacada :global(.destacada-foto) { border-radius: var(--radius-sm); }
-    .destacada-titulo { font-family: var(--font-display); font-size: var(--text-heading-h3); line-height: var(--text-heading-h3-lh); font-weight: 800; }
-    .destacada-link { display: inline-flex; align-items: center; gap: var(--space-2); font-weight: 700; }
-    .destacada:hover .destacada-link { text-decoration: underline; }
+    .destacada :global(.destacada-foto) {
+      border-radius: var(--radius-sm);
+    }
+    .destacada-titulo {
+      font-family: var(--font-display);
+      font-size: var(--text-heading-h3);
+      line-height: var(--text-heading-h3-lh);
+      font-weight: 800;
+    }
+    .destacada-link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-weight: 700;
+    }
+    .destacada:hover .destacada-link {
+      text-decoration: underline;
+    }
   }
 </style>
+
+<script>
+  import { iniciarPortada } from "../../lib/portada";
+
+  const hero = document.querySelector<HTMLElement>("[data-hero]");
+  if (hero) iniciarPortada(hero);
+</script>
 
 <script>
   const video = document.querySelector<HTMLVideoElement>("[data-video]");
@@ -149,28 +263,45 @@ const dron = await optimizar("dron-vuelo", [480]);
 
   // Respetamos "reducir movimiento" y el modo de ahorro de datos:
   // en esos casos no se descarga el video y queda la foto.
-  const reducirMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const ahorroDatos = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
+  const reducirMovimiento = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+  const ahorroDatos = (
+    navigator as Navigator & { connection?: { saveData?: boolean } }
+  ).connection?.saveData;
 
   if (video && pausa && !reducirMovimiento && !ahorroDatos) {
     // Elegimos la versión según el ancho de pantalla
     const esMobile = window.matchMedia("(max-width: 767px)").matches;
-    video.src = (esMobile ? video.dataset.srcMobile : video.dataset.srcDesktop) ?? "";
+    video.src =
+      (esMobile ? video.dataset.srcMobile : video.dataset.srcDesktop) ?? "";
 
     // Cuando arranca, el video aparece suavemente sobre la portada
-    video.addEventListener("playing", () => video.classList.add("reproduciendo"), { once: true });
-    video.play().then(() => {
-      pausa.hidden = false;
-    }).catch(() => {
-      // Si el navegador bloquea la reproducción, queda la foto
-    });
+    video.addEventListener(
+      "playing",
+      () => video.classList.add("reproduciendo"),
+      { once: true },
+    );
+    video
+      .play()
+      .then(() => {
+        pausa.hidden = false;
+      })
+      .catch(() => {
+        // Si el navegador bloquea la reproducción, queda la foto
+      });
 
     pausa.addEventListener("click", () => {
       const pausar = !video.paused;
       if (pausar) video.pause();
       else video.play();
       pausa.setAttribute("aria-pressed", String(pausar));
-      pausa.querySelector("svg")?.setAttribute("aria-label", pausar ? "Reproducir video" : "Pausar video");
+      pausa
+        .querySelector("svg")
+        ?.setAttribute(
+          "aria-label",
+          pausar ? "Reproducir video" : "Pausar video",
+        );
     });
   }
 </script>
