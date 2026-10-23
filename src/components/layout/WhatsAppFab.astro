@@ -1,0 +1,53 @@
+---
+// Botón flotante de WhatsApp. Si la página tiene hero, aparece recién al salir de él.
+import { whatsappUrl } from "../../lib/whatsapp";
+import Icon from "../ui/Icon.astro";
+---
+
+<a
+  href={whatsappUrl("Hola, quiero hacer una consulta.")}
+  target="_blank"
+  rel="noopener noreferrer"
+  class="fab"
+  data-fab
+>
+  <Icon name="chat" size={26} label="Consultar por WhatsApp" />
+</a>
+
+<style>
+  .fab {
+    position: fixed;
+    right: var(--layout-margin-mobile);
+    bottom: var(--space-6);
+    z-index: 40;
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    border: 2px solid var(--color-bg-page);
+    border-radius: var(--radius-full);
+    background: var(--color-action-primary);
+    color: var(--color-action-on-primary);
+    box-shadow: var(--shadow-lg);
+    transition: opacity 200ms, transform 200ms;
+  }
+  .fab:hover { background: var(--color-action-primary-hover); }
+  /* Escondido mientras se ve el hero */
+  .fab.escondido { opacity: 0; transform: translateY(16px); pointer-events: none; }
+
+  @media (min-width: 1024px) {
+    .fab { right: var(--space-10); bottom: var(--space-10); }
+  }
+</style>
+
+<script>
+  const fab = document.querySelector<HTMLElement>("[data-fab]");
+  const hero = document.querySelector("[data-hero]");
+
+  if (fab && hero) {
+    fab.classList.add("escondido");
+    new IntersectionObserver(([entrada]) => {
+      fab.classList.toggle("escondido", entrada.isIntersecting);
+    }).observe(hero);
+  }
+</script>

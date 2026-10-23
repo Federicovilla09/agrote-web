@@ -1,0 +1,42 @@
+---
+// SiteLayout: la estructura de todas las páginas del sitio.
+// BaseLayout (HTML) + header + contenido + footer + WhatsApp flotante.
+import BaseLayout from "./BaseLayout.astro";
+import Header from "../components/layout/Header.astro";
+import Footer from "../components/layout/Footer.astro";
+import WhatsAppFab from "../components/layout/WhatsAppFab.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+  header?: "solid" | "overlay";
+}
+const { title, description, header = "solid" } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <a href="#contenido" class="saltar">Saltar al contenido</a>
+  <Header variant={header} />
+  <main id="contenido">
+    <slot />
+  </main>
+  <Footer />
+  <WhatsAppFab />
+</BaseLayout>
+
+<style>
+  /* Enlace para usuarios de teclado: aparece solo al recibir foco */
+  .saltar {
+    position: absolute;
+    top: var(--space-2);
+    left: var(--space-2);
+    z-index: 100;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-sm);
+    background: var(--color-action-primary);
+    color: var(--color-action-on-primary);
+    font-weight: 700;
+    transform: translateY(-200%);
+  }
+  .saltar:focus { transform: none; }
+</style>

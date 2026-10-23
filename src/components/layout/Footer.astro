@@ -1,0 +1,54 @@
+---
+// Footer: navegación completa y aviso de prototipo.
+const columnas = [
+  { titulo: "Catálogo", enlaces: [["Nuevos", "/nuevos/tractores"], ["Usados", "/nuevos/tractores?condicion=usado"], ["Implementos", "/nuevos/tractores"]] },
+  { titulo: "Soluciones", enlaces: [["Precisión y drones", "/precision-y-drones"], ["Servicio técnico", "/#posventa"], ["Repuestos", "/#posventa"]] },
+  { titulo: "Empresa", enlaces: [["Quiénes somos", "/#empresa"], ["Contacto", "/#contacto"]] },
+];
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="fila">
+      <div class="marca">
+        <a href="/" class="logo">AgroTe</a>
+        <p class="text-body-s">Maquinaria, tecnología y posventa para el campo.</p>
+      </div>
+      {columnas.map((columna) => (
+        <nav aria-label={columna.titulo}>
+          <p class="text-data-s titulo">{columna.titulo}</p>
+          <ul>
+            {columna.enlaces.map(([label, href]) => <li><a href={href}>{label}</a></li>)}
+          </ul>
+        </nav>
+      ))}
+    </div>
+    <p class="text-data-s aviso">
+      Prototipo conceptual de rediseño. Nombre, logotipo, imágenes, productos y datos de contacto son de demostración y no representan información real.
+    </p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    padding-block: var(--space-10) var(--space-8);
+    background: var(--color-bg-inverse);
+    color: var(--color-text-inverse);
+  }
+  .fila { display: grid; gap: var(--space-8); }
+  .marca { display: grid; gap: var(--space-2); }
+  .marca p, .titulo, .aviso { color: var(--color-text-inverse-secondary); }
+  .logo { font-family: var(--font-display); font-size: var(--text-heading-h2); font-weight: 800; text-decoration: none; }
+  .titulo { text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: var(--space-3); }
+  ul { display: grid; gap: var(--space-2); padding: 0; list-style: none; }
+  a { text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .aviso { margin-top: var(--space-8); padding-top: var(--space-6); border-top: 1px solid var(--color-neutral-800); }
+
+  @media (min-width: 768px) {
+    .fila { grid-template-columns: 2fr 1fr 1fr 1fr; }
+  }
+  @media (min-width: 1024px) {
+    .footer { padding-block: var(--space-16) var(--space-12); }
+  }
+</style>

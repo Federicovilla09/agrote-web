@@ -1,0 +1,189 @@
+---
+// Header del sitio.
+// variant="solid": fondo blanco, fijo arriba al hacer scroll.
+// variant="overlay": transparente sobre el hero; pasa a sólido al salir del hero.
+// En mobile se esconde al bajar y reaparece al subir.
+import { menuPrincipal } from "../../data/navegacion";
+import { whatsappUrl } from "../../lib/whatsapp";
+import Button from "../ui/Button.astro";
+import Icon from "../ui/Icon.astro";
+import MobileMenu from "./MobileMenu.astro";
+
+interface Props {
+  variant?: "solid" | "overlay";
+}
+const { variant = "solid" } = Astro.props;
+
+// Marca la sección actual comparando con la URL
+const ruta = Astro.url.pathname;
+const esActual = (href: string) => href !== "/" && ruta.startsWith(href.split("?")[0].split("#")[0]) && !href.includes("#");
+const consultar = whatsappUrl("Hola, quiero hacer una consulta.");
+---
+
+<header class="header" data-header data-variant={variant}>
+  <div class="container fila">
+    <a href="/" class="logo">AgroTe</a>
+
+    <nav aria-label="Principal" class="nav-desktop">
+      <ul>
+        {menuPrincipal.map((item) => (
+          <li>
+            {item.hijos ? (
+              <details class="submenu">
+                <summary class:list={{ actual: esActual(item.href) }}>
+                  {item.label}
+                  <Icon name="chevron-abajo" size={16} />
+                </summary>
+                <ul>
+                  {item.hijos.map((hijo) => <li><a href={hijo.href}>{hijo.label}</a></li>)}
+                </ul>
+              </details>
+            ) : (
+              <a href={item.href} aria-current={esActual(item.href) ? "page" : undefined}>{item.label}</a>
+            )}
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="acciones">
+      <Button href={consultar} target="_blank" size="sm" class="consultar">Consultar</Button>
+      <button type="button" class="abrir-menu" data-abrir-menu aria-controls="menu-mobile" aria-expanded="false">
+        <Icon name="menu" label="Abrir menú" />
+      </button>
+    </div>
+  </div>
+</header>
+
+<MobileMenu />
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--color-bg-page);
+    color: var(--color-text-primary);
+    border-bottom: 1px solid var(--color-border-default);
+    transition: transform 250ms ease, background-color 200ms, color 200ms, box-shadow 200ms;
+  }
+
+  /* Sobre el hero: fijo, transparente y con texto blanco */
+  .header[data-variant="overlay"] {
+    position: fixed;
+    inset-inline: 0;
+    background: transparent;
+    color: var(--color-text-inverse);
+    border-bottom-color: transparent;
+  }
+  /* Cuando sale del hero, vuelve a sólido */
+  .header[data-variant="overlay"].es-solido {
+    background: var(--color-bg-page);
+    color: var(--color-text-primary);
+    box-shadow: var(--shadow-md);
+  }
+  /* Mobile: escondido mientras se baja */
+  .header.oculto { transform: translateY(-100%); }
+
+  .fila {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-6);
+    min-height: 64px;
+  }
+
+  .logo {
+    font-family: var(--font-display);
+    font-size: var(--text-heading-h3);
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .acciones { display: flex; align-items: center; gap: var(--space-3); }
+  .abrir-menu { display: grid; place-items: center; width: 44px; height: 44px; }
+
+  /* Navegación desktop (oculta en mobile) */
+  .nav-desktop { display: none; }
+
+  @media (min-width: 1024px) {
+    .fila { min-height: 80px; }
+    .abrir-menu { display: none; }
+    .nav-desktop { display: block; }
+    .nav-desktop > ul { display: flex; gap: var(--space-8); padding: 0; list-style: none; }
+    .nav-desktop a,
+    .nav-desktop summary {
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+      padding-block: var(--space-2);
+      border-bottom: 2px solid transparent;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .nav-desktop summary { list-style: none; }
+    .nav-desktop summary::-webkit-details-marker { display: none; }
+    .nav-desktop a:hover,
+    .nav-desktop summary:hover { border-bottom-color: currentColor; }
+    /* Sección actual: negrita y subrayado, como en Figma */
+    .nav-desktop [aria-current="page"],
+    .nav-desktop .actual { font-weight: 700; border-bottom-color: currentColor; }
+
+    /* Submenú desplegable */
+    .submenu { position: relative; }
+    .submenu ul {
+      position: absolute;
+      top: calc(100% + var(--space-2));
+      left: 0;
+      min-width: 200px;
+      padding: var(--space-2);
+      list-style: none;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      background: var(--color-bg-page);
+      color: var(--color-text-primary);
+      box-shadow: var(--shadow-lg);
+    }
+    .submenu ul a { padding: var(--space-2) var(--space-3); border: 0; border-radius: var(--radius-sm); }
+    .submenu ul a:hover { background: var(--color-bg-hover); }
+  }
+</style>
+
+<script>
+  // Este script se ejecuta en el navegador. Astro lo empaqueta y lo carga una sola vez.
+  const header = document.querySelector<HTMLElement>("[data-header]");
+  const hero = document.querySelector("[data-hero]");
+
+  if (header) {
+    // 1. Overlay → sólido: observamos el hero y cambiamos cuando deja de verse.
+    if (header.dataset.variant === "overlay" && hero) {
+      const observer = new IntersectionObserver(
+        ([entrada]) => header.classList.toggle("es-solido", !entrada.isIntersecting),
+        { rootMargin: `-${header.offsetHeight}px 0px 0px 0px` },
+      );
+      observer.observe(hero);
+    }
+
+    // 2. Mobile: esconder al bajar, mostrar al subir.
+    const mobile = window.matchMedia("(max-width: 1023px)");
+    let ultimoScroll = window.scrollY;
+    window.addEventListener(
+      "scroll",
+      () => {
+        const actual = window.scrollY;
+        const bajando = actual > ultimoScroll && actual > 200;
+        header.classList.toggle("oculto", mobile.matches && bajando);
+        ultimoScroll = actual;
+      },
+      { passive: true },
+    );
+
+    // 3. Submenús desktop: se cierran al hacer clic afuera o al abrir otro.
+    const submenus = header.querySelectorAll("details");
+    document.addEventListener("click", (evento) => {
+      submenus.forEach((submenu) => {
+        if (!submenu.contains(evento.target as Node)) submenu.open = false;
+      });
+    });
+  }
+</script>

@@ -1,15 +1,34 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import PruebaReact from "../components/PruebaReact";
+// Inicio provisorio para probar la estructura global.
+// En la etapa 6 lo reemplazamos por el inicio real.
+import SiteLayout from "../layouts/SiteLayout.astro";
 ---
 
-<BaseLayout title="Entorno listo">
-  <main class="container" style="padding-block: var(--space-16); display: grid; gap: var(--space-6);">
-    <h1 class="text-display-xl">Del tractor al dron</h1>
-    <p class="text-body-l" style="color: var(--color-text-secondary);">
-      Este texto en Atkinson, el título en Big Shoulders y el dato de abajo en mono.
-    </p>
-    <p class="text-data-l">85 HP · 4 cil. · 12+12</p>
-    <PruebaReact client:load />
-  </main>
-</BaseLayout>
+<SiteLayout title="Inicio" header="overlay">
+  <section class="hero" data-hero>
+    <div class="container">
+      <p class="text-data-s eyebrow">Concesionaria agrícola · Litoral</p>
+      <h1 class="text-display-xl">Del tractor al dron</h1>
+      <p class="text-body-l">Hacé scroll: el header pasa a sólido al salir de este bloque y aparece el WhatsApp flotante.</p>
+    </div>
+  </section>
+
+  <section class="container relleno">
+    <h2 class="text-h1">Contenido de prueba</h2>
+    <p class="text-body-l">En mobile, el header se esconde al bajar y vuelve al subir. Probá también el menú (achicá la ventana por debajo de 1024 px).</p>
+  </section>
+</SiteLayout>
+
+<style>
+  .hero {
+    display: flex;
+    align-items: flex-end;
+    min-height: 90vh;
+    padding-block: var(--space-24) var(--space-12);
+    background: var(--color-bg-media);
+    color: var(--color-text-inverse);
+  }
+  .hero .container { display: grid; gap: var(--space-4); }
+  .eyebrow { color: var(--color-text-inverse-secondary); }
+  .relleno { display: grid; gap: var(--space-6); min-height: 150vh; padding-block: var(--space-16); }
+</style>
