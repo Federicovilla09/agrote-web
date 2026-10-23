@@ -14,6 +14,7 @@ interface Props {
   disabled?: boolean;
   fullWidth?: boolean;
   class?: string;
+  target?: "_blank";
 }
 
 const {
@@ -22,6 +23,7 @@ const {
   href,
   icon,
   type = "button",
+  target,
   disabled = false,
   fullWidth = false,
   class: className,
@@ -36,6 +38,7 @@ const Tag = href ? "a" : "button";
   type={href ? undefined : type}
   disabled={!href && disabled ? true : undefined}
   aria-disabled={href && disabled ? "true" : undefined}
+  target={target}
 >
   <slot />
   {icon && <Icon name={icon} size={18} />}

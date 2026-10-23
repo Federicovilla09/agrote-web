@@ -1,0 +1,5 @@
+[
+  { "id": "oferta-tractor-85", "producto": "Tractor 85 HP", "condicion": "Entrega inmediata y financiación a medida.", "vigencia": "Válido hasta el 30/11", "imagen": "tractor-taller" },
+  { "id": "oferta-pulverizador", "producto": "Pulverizador 3.000 L", "condicion": "Bonificación en el primer service.", "vigencia": "Válido hasta el 15/12", "imagen": "tractor-pulverizando" },
+  { "id": "oferta-mantenimiento", "producto": "Kits de mantenimiento", "condicion": "Descuento en filtros y lubricantes.", "vigencia": "Válido hasta el 30/11", "imagen": "motor-detalle" }
+]

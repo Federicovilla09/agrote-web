@@ -1,0 +1,6 @@
+[
+  { "id": "entrega-1", "modelo": "Tractor 110 HP", "detalle": "Nueva entrega · Foto de stock", "imagen": "entrega-obra" },
+  { "id": "entrega-2", "modelo": "Cosechadora 260 CV", "detalle": "Nueva entrega · Foto de stock", "imagen": "entrega-campo" },
+  { "id": "entrega-3", "modelo": "Dron pulverizador 40 L", "detalle": "Nueva entrega · Foto de stock", "imagen": "agronomo-dron" },
+  { "id": "entrega-4", "modelo": "Cargadora frontal 180 HP", "detalle": "Nueva entrega · Foto de stock", "imagen": "operario-cabina" }
+]

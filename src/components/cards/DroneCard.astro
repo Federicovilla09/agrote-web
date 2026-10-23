@@ -1,0 +1,36 @@
+---
+// DroneCard: dron con un dato dominante arriba (referencia Hecta).
+import type { Dron } from "../../data/tipos";
+import { optimizar } from "../../lib/imagenes";
+import { whatsappUrl, mensajeProducto } from "../../lib/whatsapp";
+import Foto from "../ui/Foto.astro";
+import Button from "../ui/Button.astro";
+
+interface Props { dron: Dron }
+const { dron } = Astro.props;
+const imagen = await optimizar(dron.imagen);
+---
+
+<article class="card">
+  <div class="dato">
+    <p class="text-h1">{dron.valor}</p>
+    <p class="text-data-s unidad">{dron.unidad}</p>
+  </div>
+  <Foto imagen={imagen} alt={dron.modelo} ratio="16 / 10" sizes="(min-width: 1024px) 352px, 240px" class="foto" />
+  <h3 class="text-h3">{dron.modelo}</h3>
+  <p class="text-data-s unidad">{dron.datos}</p>
+  <Button href={whatsappUrl(mensajeProducto(dron.modelo))} target="_blank" variant="secondary" size="sm" fullWidth>Consultar</Button>
+</article>
+
+<style>
+  .card {
+    display: grid;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    border-radius: var(--radius-lg);
+    background: var(--color-bg-subtle);
+  }
+  .dato { display: flex; justify-content: space-between; align-items: flex-end; }
+  .unidad { color: var(--color-text-secondary); }
+  .card :global(.foto) { border-radius: var(--radius-sm); }
+</style>

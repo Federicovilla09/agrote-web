@@ -1,0 +1,4 @@
+[
+  { "id": "evento-1", "dia": "29", "mes": "OCT", "titulo": "Charla técnica y vuelo en vivo", "lugar": "Sociedad rural · Ciudad de demostración · 9 h" },
+  { "id": "evento-2", "dia": "12", "mes": "NOV", "titulo": "Jornada de pulverización con drones", "lugar": "Campo demostrativo · Ruta de demostración · 8 h" }
+]

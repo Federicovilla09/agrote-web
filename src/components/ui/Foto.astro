@@ -1,0 +1,37 @@
+---
+// Foto: imagen optimizada con proporción fija. Si no hay imagen, muestra un placeholder.
+import type { ImagenOptimizada } from "../../lib/imagenes";
+
+interface Props {
+  imagen?: ImagenOptimizada;
+  alt: string;
+  ratio?: string;   // por ejemplo "4 / 3"
+  sizes?: string;   // qué ancho ocupa la foto en pantalla, para elegir la versión justa
+  class?: string;
+  priority?: boolean;
+}
+
+const { imagen, alt, ratio = "4 / 3", sizes = "100vw", class: className, priority = false } = Astro.props;
+---
+
+{imagen ? (
+  <img
+    class:list={["foto", className]}
+    src={imagen.src}
+    srcset={imagen.srcset}
+    sizes={sizes}
+    width={imagen.width}
+    height={imagen.height}
+    alt={alt}
+    loading={priority ? "eager" : "lazy"}
+    decoding="async"
+    fetchpriority={priority ? "high" : undefined}
+    style={`aspect-ratio: ${ratio}`}
+  />
+) : (
+  <div class:list={["foto", "placeholder", className]} style={`aspect-ratio: ${ratio}`} aria-hidden="true"></div>
+)}
+
+<style>
+  .foto { width: 100%; height: auto; object-fit: cover; background: var(--color-placeholder-fill); }
+</style>

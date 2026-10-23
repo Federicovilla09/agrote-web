@@ -1,0 +1,71 @@
+---
+// Página de trabajo: todas las tarjetas con los datos de demostración.
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ProductCard from "../components/cards/ProductCard";
+import OfferCard from "../components/cards/OfferCard.astro";
+import DroneCard from "../components/cards/DroneCard.astro";
+import DeliveryCard from "../components/cards/DeliveryCard.astro";
+import BusinessLineCard from "../components/cards/BusinessLineCard.astro";
+import EventCard from "../components/cards/EventCard.astro";
+import { tractoresNuevos, usadosDestacados, ofertas, drones, entregas, lineas, eventos } from "../data";
+import { optimizar } from "../lib/imagenes";
+
+// Las imágenes de las tarjetas de producto se preparan acá (en el servidor)
+// y se pasan como props, porque ProductCard es React y no puede optimizarlas sola.
+const productos = [...tractoresNuevos, ...usadosDestacados];
+const imagenes = await Promise.all(productos.map((p) => optimizar(p.imagen)));
+---
+
+<BaseLayout title="Tarjetas">
+  <main class="container pagina">
+    <h1 class="text-display-l">Tarjetas</h1>
+
+    <section>
+      <h2 class="text-h2">Producto</h2>
+      <div class="grilla g4">
+        {productos.map((producto, i) => <ProductCard producto={producto} imagen={imagenes[i]} />)}
+      </div>
+    </section>
+
+    <section>
+      <h2 class="text-h2">Oferta</h2>
+      <div class="grilla g3">{ofertas.map((oferta) => <OfferCard oferta={oferta} />)}</div>
+    </section>
+
+    <section>
+      <h2 class="text-h2">Dron</h2>
+      <div class="grilla g3">{drones.map((dron) => <DroneCard dron={dron} />)}</div>
+    </section>
+
+    <section>
+      <h2 class="text-h2">Entrega</h2>
+      <div class="grilla g4">{entregas.map((entrega) => <DeliveryCard entrega={entrega} />)}</div>
+    </section>
+
+    <section class="oscuro">
+      <h2 class="text-h2">Línea de negocio</h2>
+      <p class="text-body-s">Achicá la ventana: debajo de 1024 px cambia a la versión mobile con ícono.</p>
+      <div class="grilla g5">{lineas.map((linea) => <BusinessLineCard linea={linea} />)}</div>
+    </section>
+
+    <section>
+      <h2 class="text-h2">Evento</h2>
+      <div class="grilla g2">{eventos.map((evento) => <EventCard evento={evento} />)}</div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .pagina { display: grid; gap: var(--space-16); padding-block: var(--space-16); }
+  section { display: grid; gap: var(--space-6); }
+  .grilla { display: grid; gap: var(--space-6); }
+  @media (min-width: 768px) {
+    .g2, .g3, .g4 { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1024px) {
+    .g3 { grid-template-columns: repeat(3, 1fr); }
+    .g4 { grid-template-columns: repeat(4, 1fr); }
+    .g5 { grid-template-columns: repeat(5, 1fr); gap: var(--space-4); }
+  }
+  .oscuro { padding: var(--space-8); border-radius: var(--radius-xl); background: var(--color-bg-media); color: var(--color-text-inverse); }
+</style>

@@ -1,0 +1,47 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-page);
+  transition: box-shadow 200ms;
+}
+@media (hover: hover) {
+  .card:hover { box-shadow: var(--shadow-md); }
+}
+
+.foto {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: var(--color-placeholder-fill);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-4) var(--space-5);
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-data-eyebrow);
+  line-height: var(--text-data-eyebrow-lh);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-secondary);
+}
+.title { font-size: var(--text-heading-h3); line-height: var(--text-heading-h3-lh); }
+.specs { font-family: var(--font-mono); font-size: var(--text-data-l); color: var(--color-text-secondary); }
+
+.actions {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: auto; /* empuja los botones al fondo: todas las tarjetas quedan alineadas */
+  padding-top: var(--space-3);
+}
+.actions > * { flex: 1; }

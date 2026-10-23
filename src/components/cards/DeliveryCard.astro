@@ -1,0 +1,23 @@
+---
+// DeliveryCard: entrega reciente (prueba social). Fotos de stock en el demo.
+import type { Entrega } from "../../data/tipos";
+import { optimizar } from "../../lib/imagenes";
+import Foto from "../ui/Foto.astro";
+
+interface Props { entrega: Entrega }
+const { entrega } = Astro.props;
+const imagen = await optimizar(entrega.imagen, [480, 960]);
+---
+
+<article class="card">
+  <Foto imagen={imagen} alt={`Entrega de ${entrega.modelo}`} ratio="3 / 2" sizes="(min-width: 1024px) 272px, 240px" class="foto" />
+  <p class="modelo">{entrega.modelo}</p>
+  <p class="text-data-s detalle">{entrega.detalle}</p>
+</article>
+
+<style>
+  .card { display: grid; gap: var(--space-2); }
+  .card :global(.foto) { border-radius: var(--radius-md); }
+  .modelo { font-weight: 700; }
+  .detalle { color: var(--color-text-secondary); }
+</style>

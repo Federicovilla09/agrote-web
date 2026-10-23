@@ -1,0 +1,5 @@
+[
+  { "id": "dron-40", "valor": "40 L", "unidad": "Tanque", "modelo": "Dron pulverizador 40 L", "datos": "Hasta 20 ha/h · Demo", "imagen": "dron-pulverizador-grande" },
+  { "id": "dron-20", "valor": "20 L", "unidad": "Tanque", "modelo": "Dron pulverizador 20 L", "datos": "Hasta 10 ha/h · Demo", "imagen": "dron-hexacoptero" },
+  { "id": "dron-mapeo", "valor": "45 min", "unidad": "Autonomía", "modelo": "Dron de mapeo", "datos": "Cámara multiespectral · Demo", "imagen": "dron-mapeo" }
+]

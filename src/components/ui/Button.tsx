@@ -1,4 +1,5 @@
 // Button (React): mismas props y estilos que Button.astro, para usar dentro de islas.
+// Con href se dibuja como enlace (<a>); sin href, como botón.
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 import Icon from "./Icon";
 import type { IconName } from "./icons";
@@ -10,6 +11,8 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: "md" | "sm";
   icon?: IconName;
   fullWidth?: boolean;
+  href?: string;
+  target?: "_blank";
 }
 
 export default function Button({
@@ -18,6 +21,8 @@ export default function Button({
   size = "md",
   icon,
   fullWidth = false,
+  href,
+  target,
   type = "button",
   className,
   ...rest
@@ -26,10 +31,24 @@ export default function Button({
     .filter(Boolean)
     .join(" ");
 
-  return (
-    <button type={type} className={classes} {...rest}>
+  const contenido = (
+    <>
       {children}
       {icon && <Icon name={icon} size={18} />}
+    </>
+  );
+
+  if (href) {
+    return (
+      <a href={href} className={classes} target={target} rel={target === "_blank" ? "noopener noreferrer" : undefined}>
+        {contenido}
+      </a>
+    );
+  }
+
+  return (
+    <button type={type} className={classes} {...rest}>
+      {contenido}
     </button>
   );
 }
