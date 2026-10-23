@@ -1,0 +1,50 @@
+---
+// Accordion: usa <details> y <summary> nativos. Se abre y cierra sin JavaScript
+// y funciona con teclado y lectores de pantalla.
+import Icon from "./Icon.astro";
+
+interface Props {
+  title: string;
+  open?: boolean;
+}
+const { title, open = false } = Astro.props;
+---
+
+<details class="accordion" open={open}>
+  <summary>
+    <span>{title}</span>
+    <Icon name="mas" size={20} class="icono-mas" />
+    <Icon name="menos" size={20} class="icono-menos" />
+  </summary>
+  <div class="contenido">
+    <slot />
+  </div>
+</details>
+
+<style>
+  .accordion {
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-page);
+  }
+
+  summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    min-height: 56px;
+    padding: var(--space-4);
+    font-weight: 700;
+    cursor: pointer;
+    list-style: none; /* oculta el triángulo nativo */
+  }
+  summary::-webkit-details-marker { display: none; }
+
+  /* Mostramos "+" cerrado y "−" abierto */
+  .accordion :global(.icono-menos) { display: none; }
+  .accordion[open] :global(.icono-mas) { display: none; }
+  .accordion[open] :global(.icono-menos) { display: block; }
+
+  .contenido { padding: 0 var(--space-4) var(--space-2); }
+</style>

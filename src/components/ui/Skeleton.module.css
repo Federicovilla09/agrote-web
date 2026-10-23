@@ -1,0 +1,26 @@
+.skeleton {
+  display: block;
+  /* Brillo que recorre el bloque: va de base a highlight y vuelve */
+  background: linear-gradient(
+    90deg,
+    var(--color-skeleton-base) 25%,
+    var(--color-skeleton-highlight) 50%,
+    var(--color-skeleton-base) 75%
+  );
+  background-size: 200% 100%;
+  animation: brillo 1.4s ease-in-out infinite;
+}
+
+.line { height: 12px; border-radius: var(--radius-xs); }
+.block { border-radius: var(--radius-md); }
+.circle { border-radius: var(--radius-full); }
+
+@keyframes brillo {
+  from { background-position: 100% 0; }
+  to { background-position: -100% 0; }
+}
+
+/* Con "reducir movimiento" queda estático en el color base */
+@media (prefers-reduced-motion: reduce) {
+  .skeleton { animation: none; background: var(--color-skeleton-base); }
+}

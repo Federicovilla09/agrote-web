@@ -1,8 +1,9 @@
 ---
-// Button: el botón del sistema. Si recibe href se dibuja como enlace (<a>),
-// si no, como botón (<button>). Mismas variantes y tamaños que en Figma.
+// Button (Astro). Si recibe href se dibuja como enlace (<a>), si no, como <button>.
+// Los estilos viven en Button.module.css y se comparten con Button.tsx.
 import Icon from "./Icon.astro";
 import type { IconName } from "./icons";
+import styles from "./Button.module.css";
 
 interface Props {
   variant?: "primary" | "secondary" | "accent" | "light" | "link";
@@ -30,7 +31,7 @@ const Tag = href ? "a" : "button";
 ---
 
 <Tag
-  class:list={["btn", `btn--${variant}`, `btn--${size}`, { "btn--full": fullWidth }, className]}
+  class:list={[styles.btn, styles[variant], styles[size], fullWidth && styles.full, className]}
   href={href}
   type={href ? undefined : type}
   disabled={!href && disabled ? true : undefined}
@@ -39,61 +40,3 @@ const Tag = href ? "a" : "button";
   <slot />
   {icon && <Icon name={icon} size={18} />}
 </Tag>
-
-<style>
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-2);
-    min-height: 44px; /* área táctil mínima */
-    font-family: var(--font-body);
-    font-size: var(--text-label-button);
-    line-height: var(--text-label-button-lh);
-    font-weight: 700;
-    text-decoration: none;
-    border: 1.5px solid transparent;
-    border-radius: var(--radius-sm);
-    transition: background-color 150ms, border-color 150ms, color 150ms;
-  }
-
-  /* Tamaños */
-  .btn--md { padding: var(--space-4) var(--space-6); }
-  .btn--sm { padding: var(--space-3) var(--space-4); }
-  .btn--full { width: 100%; }
-
-  /* Variantes */
-  .btn--primary { background: var(--color-action-primary); color: var(--color-action-on-primary); }
-  .btn--secondary { border-color: var(--color-action-secondary); color: var(--color-action-secondary); }
-  .btn--accent { background: var(--color-action-accent); color: var(--color-action-on-accent); }
-  .btn--light { background: var(--color-bg-page); color: var(--color-text-primary); }
-  .btn--link { padding-inline: 0; color: var(--color-text-brand); }
-
-  /* Hover solo en dispositivos con mouse, para que no quede "pegado" en mobile */
-  @media (hover: hover) {
-    .btn--primary:hover { background: var(--color-action-primary-hover); }
-    .btn--secondary:hover,
-    .btn--light:hover { background: var(--color-bg-hover); }
-    .btn--accent:hover { background: var(--color-action-accent-hover); }
-    .btn--link:hover { text-decoration: underline; }
-  }
-
-  /* Presionado */
-  .btn--primary:active { background: var(--color-action-primary-pressed); }
-  .btn--secondary:active,
-  .btn--light:active { background: var(--color-bg-pressed); }
-  .btn--accent:active { background: var(--color-action-accent-pressed); }
-
-  /* Deshabilitado (va al final para ganarle a los estados anteriores) */
-  .btn:disabled,
-  .btn[aria-disabled="true"] {
-    background: var(--color-action-disabled);
-    border-color: transparent;
-    color: var(--color-action-on-disabled);
-    cursor: not-allowed;
-    pointer-events: none;
-  }
-  .btn--secondary:disabled { background: none; border-color: var(--color-border-default); }
-  .btn--link:disabled,
-  .btn--link[aria-disabled="true"] { background: none; }
-</style>

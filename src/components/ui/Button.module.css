@@ -1,0 +1,56 @@
+/* Estilos del botón: los comparten Button.astro y Button.tsx */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 44px; /* área táctil mínima */
+  font-family: var(--font-body);
+  font-size: var(--text-label-button);
+  line-height: var(--text-label-button-lh);
+  font-weight: 700;
+  text-decoration: none;
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-sm);
+  transition: background-color 150ms, border-color 150ms, color 150ms;
+}
+
+/* Tamaños */
+.md { padding: var(--space-4) var(--space-6); }
+.sm { padding: var(--space-3) var(--space-4); }
+.full { width: 100%; }
+
+/* Variantes */
+.primary { background: var(--color-action-primary); color: var(--color-action-on-primary); }
+.secondary { border-color: var(--color-action-secondary); color: var(--color-action-secondary); }
+.accent { background: var(--color-action-accent); color: var(--color-action-on-accent); }
+.light { background: var(--color-bg-page); color: var(--color-text-primary); }
+.link { padding-inline: 0; color: var(--color-text-brand); }
+
+/* Hover solo en dispositivos con mouse */
+@media (hover: hover) {
+  .primary:hover { background: var(--color-action-primary-hover); }
+  .secondary:hover,
+  .light:hover { background: var(--color-bg-hover); }
+  .accent:hover { background: var(--color-action-accent-hover); }
+  .link:hover { text-decoration: underline; }
+}
+
+/* Presionado */
+.primary:active { background: var(--color-action-primary-pressed); }
+.secondary:active,
+.light:active { background: var(--color-bg-pressed); }
+.accent:active { background: var(--color-action-accent-pressed); }
+
+/* Deshabilitado */
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  background: var(--color-action-disabled);
+  border-color: transparent;
+  color: var(--color-action-on-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.secondary:disabled { background: none; border-color: var(--color-border-default); }
+.link:disabled,
+.link[aria-disabled="true"] { background: none; }

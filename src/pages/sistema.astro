@@ -7,6 +7,10 @@ import Icon from "../components/ui/Icon.astro";
 import { icons, type IconName } from "../components/ui/icons";
 import Tag from "../components/ui/Tag.astro";
 import DemoControles from "../components/dev/DemoControles";
+import DemoEstados from "../components/dev/DemoEstados";
+import Accordion from "../components/ui/Accordion.astro";
+import SpecList from "../components/ui/SpecList.astro";
+import Breadcrumb from "../components/ui/Breadcrumb.astro";
 
 const variants = ["primary", "secondary", "accent", "light", "link"] as const;
 const iconNames = Object.keys(icons) as IconName[];
@@ -51,6 +55,28 @@ const iconNames = Object.keys(icons) as IconName[];
       <h2 class="text-h2">Controles de formulario</h2>
       <p class="text-body-s" style="color: var(--color-text-secondary);">Isla de React: probá los chips, el conmutador, los checkbox y el error del teléfono.</p>
       <DemoControles client:load />
+    </section>
+
+        <section>
+      <h2 class="text-h2">Breadcrumb</h2>
+      <Breadcrumb items={[{ label: "Inicio", href: "/" }, { label: "Tractores", href: "#" }, { label: "Tractor 85 HP" }]} />
+    </section>
+
+    <section>
+      <h2 class="text-h2">Acordeón</h2>
+      <div style="display: grid; gap: var(--space-3); max-width: 420px;">
+        <Accordion title="Motor" open>
+          <SpecList items={[["Potencia nominal", "85 HP"], ["Cilindros", "4, turbo"], ["Cilindrada", "3,4 L"]]} />
+        </Accordion>
+        <Accordion title="Transmisión">
+          <SpecList items={[["Marchas", "12 + 12"], ["Inversor", "Sincronizado"]]} />
+        </Accordion>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="text-h2">Alertas, skeleton y estados</h2>
+      <DemoEstados />
     </section>
 
     <section>

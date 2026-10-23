@@ -1,0 +1,44 @@
+---
+// Breadcrumb: muestra dónde está el usuario. El último nivel es la página actual.
+interface Crumb {
+  label: string;
+  href?: string;
+}
+interface Props {
+  items: Crumb[];
+}
+const { items } = Astro.props;
+---
+
+<nav aria-label="Ruta de navegación" class="breadcrumb">
+  <ol>
+    {items.map((item, i) => {
+      const esActual = i === items.length - 1;
+      return (
+        <li>
+          {esActual || !item.href
+            ? <span aria-current={esActual ? "page" : undefined}>{item.label}</span>
+            : <a href={item.href}>{item.label}</a>}
+        </li>
+      );
+    })}
+  </ol>
+</nav>
+
+<style>
+  ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    padding: 0;
+    list-style: none;
+    font-size: var(--text-body-s);
+    line-height: var(--text-body-s-lh);
+  }
+  li { display: flex; gap: var(--space-2); color: var(--color-text-secondary); }
+  /* El separador "/" lo dibuja CSS, así no lo lee el lector de pantalla como texto */
+  li + li::before { content: "/"; color: var(--color-border-strong); }
+  a { color: var(--color-text-secondary); text-decoration: none; }
+  a:hover { color: var(--color-text-primary); text-decoration: underline; }
+  [aria-current="page"] { color: var(--color-text-primary); }
+</style>
