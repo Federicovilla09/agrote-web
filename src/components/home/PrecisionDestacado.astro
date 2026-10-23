@@ -1,0 +1,54 @@
+---
+import { optimizar } from "../../lib/imagenes";
+import Eyebrow from "../ui/Eyebrow.astro";
+import Button from "../ui/Button.astro";
+import Foto from "../ui/Foto.astro";
+
+const imagen = await optimizar("dron-pulverizando");
+const datos = [["40 L", "Tanque"], ["20 ha/h", "Rendimiento"], ["Demo", "Ejemplo"]];
+---
+
+<section class="seccion precision" aria-labelledby="precision-titulo">
+  <div class="container interior">
+    <Foto imagen={imagen} alt="Dron pulverizando un cultivo" ratio="5 / 4" sizes="(min-width: 1024px) 600px, 100vw" class="foto" />
+    <div class="texto">
+      <Eyebrow>Agricultura de precisión</Eyebrow>
+      <h2 id="precision-titulo" class="text-h1">Precisión que se nota en cada hectárea</h2>
+      <p class="text-body-l bajada">Drones de pulverización y mapeo, con asesoramiento para implementarlos en tu campo.</p>
+      <ul class="chips">
+        <li>Pulverización</li><li>Mapeo</li><li>Monitoreo</li>
+      </ul>
+      <dl class="datos">
+        {datos.map(([valor, label]) => (
+          <div><dt class="text-data-s">{label}</dt><dd class="text-h2">{valor}</dd></div>
+        ))}
+      </dl>
+      <Button href="/precision-y-drones" icon="flecha-derecha">Conocer soluciones</Button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .precision { background: var(--color-bg-brand-subtle); }
+  .interior { display: grid; gap: var(--space-8); align-items: center; }
+  .interior :global(.foto) { border-radius: var(--radius-xl); }
+  .texto { display: grid; gap: var(--space-4); justify-items: start; }
+  .bajada { color: var(--color-text-secondary); }
+
+  .chips { display: flex; flex-wrap: wrap; gap: var(--space-2); padding: 0; list-style: none; }
+  .chips li {
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-full);
+    font-family: var(--font-mono);
+    font-size: var(--text-data-s);
+  }
+
+  .datos { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3); width: 100%; }
+  .datos div { display: flex; flex-direction: column-reverse; gap: var(--space-1); padding: var(--space-4); border-radius: var(--radius-md); background: var(--color-bg-page); }
+  .datos dt { color: var(--color-text-secondary); }
+
+  @media (min-width: 1024px) {
+    .interior { grid-template-columns: 1fr 1fr; gap: var(--space-20); }
+  }
+</style>

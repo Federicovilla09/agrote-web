@@ -1,0 +1,28 @@
+---
+import { usadosDestacados } from "../../data";
+import { optimizar } from "../../lib/imagenes";
+import SectionHeader from "../ui/SectionHeader.astro";
+import Carrusel from "../ui/Carrusel.astro";
+import ProductCard from "../cards/ProductCard";
+
+// ProductCard es React: le pasamos las imágenes ya optimizadas
+const imagenes = await Promise.all(usadosDestacados.map((p) => optimizar(p.imagen)));
+---
+
+<section class="seccion" aria-labelledby="usados-titulo">
+  <div class="container interior">
+    <SectionHeader
+      id="usados-titulo"
+      eyebrow="Usados"
+      title="Usados destacados"
+      link={{ label: "Ver todos los usados", href: "/nuevos/tractores?condicion=usado" }}
+    />
+    <Carrusel label="Usados destacados" columnas={4}>
+      {usadosDestacados.map((producto, i) => <ProductCard producto={producto} imagen={imagenes[i]} />)}
+    </Carrusel>
+  </div>
+</section>
+
+<style>
+  .interior { display: grid; gap: var(--space-8); }
+</style>

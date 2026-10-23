@@ -1,0 +1,34 @@
+---
+import { entregas } from "../../data";
+import Eyebrow from "../ui/Eyebrow.astro";
+import Button from "../ui/Button.astro";
+import Carrusel from "../ui/Carrusel.astro";
+import DeliveryCard from "../cards/DeliveryCard.astro";
+---
+
+<section id="empresa" class="seccion" aria-labelledby="empresa-titulo">
+  <div class="container interior">
+    <div class="texto">
+      <Eyebrow>Quiénes somos</Eyebrow>
+      <h2 id="empresa-titulo" class="text-h1">Una concesionaria del litoral, cerca de tu campo</h2>
+      <p class="text-body-l bajada">Más de dos décadas acompañando a productores de la región. Texto de demostración.</p>
+      <Button href="/#contacto" variant="link" icon="flecha-derecha">Conocer la empresa</Button>
+    </div>
+    <div class="entregas">
+      <h3 class="text-h3">Entregas recientes</h3>
+      <Carrusel label="Entregas recientes" columnas={2} ancho="min(75%, 240px)">
+        {entregas.map((entrega) => <DeliveryCard entrega={entrega} />)}
+      </Carrusel>
+    </div>
+  </div>
+</section>
+
+<style>
+  .interior { display: grid; gap: var(--space-10); }
+  .texto { display: grid; gap: var(--space-4); justify-items: start; }
+  .bajada { color: var(--color-text-secondary); }
+  .entregas { display: grid; gap: var(--space-4); }
+  @media (min-width: 1024px) {
+    .interior { grid-template-columns: 1fr 1fr; gap: var(--space-20); align-items: center; }
+  }
+</style>

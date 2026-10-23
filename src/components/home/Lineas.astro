@@ -1,0 +1,33 @@
+---
+// Líneas de negocio: accesos directos sobre el azul profundo.
+import { lineas } from "../../data";
+import SectionHeader from "../ui/SectionHeader.astro";
+import BusinessLineCard from "../cards/BusinessLineCard.astro";
+---
+
+<section class="seccion lineas" aria-labelledby="lineas-titulo">
+  <div class="container interior">
+    <SectionHeader
+      id="lineas-titulo"
+      eyebrow="¿Qué estás buscando?"
+      title="Todo para tu campo, en un lugar"
+      description="Accesos directos a cada línea de negocio."
+      tone="dark"
+      size="lg"
+    />
+    <ul class="grilla">
+      {lineas.map((linea) => <li><BusinessLineCard linea={linea} /></li>)}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .lineas { background: var(--color-bg-media); }
+  .interior { display: grid; gap: var(--space-8); }
+  .grilla { display: grid; gap: var(--space-3); padding: 0; list-style: none; }
+  .grilla li { display: grid; }
+  @media (min-width: 1024px) {
+    .interior { gap: var(--space-12); }
+    .grilla { grid-template-columns: repeat(5, 1fr); gap: var(--space-4); }
+  }
+</style>

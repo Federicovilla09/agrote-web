@@ -1,0 +1,18 @@
+.form {
+  display: grid;
+  gap: var(--space-5);
+  padding: var(--space-6);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-xl);
+  background: var(--color-bg-page);
+  box-shadow: var(--shadow-md);
+}
+.title { font-size: var(--text-heading-h2); line-height: var(--text-heading-h2-lh); }
+.row { display: grid; gap: var(--space-5); }
+
+@media (min-width: 768px) {
+  .row { grid-template-columns: 1fr 1fr; }
+}
+@media (min-width: 1024px) {
+  .form { padding: var(--space-10); }
+}

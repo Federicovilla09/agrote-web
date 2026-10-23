@@ -1,0 +1,47 @@
+---
+// Carrusel: en mobile, scroll horizontal con "imán" en cada tarjeta.
+// En desktop, se convierte en grilla.
+interface Props {
+  label: string;       // describe el contenido para lectores de pantalla
+  columnas?: number;   // columnas en desktop
+  ancho?: string;      // ancho de cada tarjeta en mobile
+}
+const { label, columnas = 3, ancho = "min(80%, 280px)" } = Astro.props;
+---
+
+<div class="carrusel" role="region" aria-label={label} tabindex="0" style={`--columnas: ${columnas}; --ancho: ${ancho}`}>
+  <slot />
+</div>
+
+<style>
+  .carrusel {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: var(--ancho);
+    gap: var(--space-3);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    /* Se estira hasta los bordes de la pantalla y deja el margen como relleno */
+    margin-inline: calc(var(--layout-margin-mobile) * -1);
+    padding-inline: var(--layout-margin-mobile);
+    scroll-padding-inline: var(--layout-margin-mobile);
+    padding-bottom: var(--space-2);
+    scrollbar-width: none;
+  }
+  .carrusel::-webkit-scrollbar { display: none; }
+  .carrusel > :global(*) { scroll-snap-align: start; }
+
+  @media (min-width: 768px) {
+    .carrusel { margin-inline: calc(var(--layout-margin-tablet) * -1); padding-inline: var(--layout-margin-tablet); scroll-padding-inline: var(--layout-margin-tablet); }
+  }
+  @media (min-width: 1024px) {
+    .carrusel {
+      grid-auto-flow: row;
+      grid-template-columns: repeat(var(--columnas), 1fr);
+      gap: var(--space-6);
+      overflow: visible;
+      margin-inline: 0;
+      padding: 0;
+    }
+  }
+</style>

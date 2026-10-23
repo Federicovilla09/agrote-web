@@ -1,0 +1,26 @@
+---
+// Eyebrow: etiqueta chica arriba de los títulos, con el punto amarillo de la marca.
+interface Props {
+  tone?: "light" | "dark"; // dark = sobre fondo oscuro
+}
+const { tone = "light" } = Astro.props;
+---
+
+<p class:list={["eyebrow", { oscuro: tone === "dark" }]}><span class="punto" aria-hidden="true"></span><slot /></p>
+
+<style>
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--text-data-eyebrow);
+    line-height: var(--text-data-eyebrow-lh);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-secondary);
+  }
+  .oscuro { color: var(--color-text-inverse-secondary); }
+  .punto { width: 8px; height: 8px; border-radius: var(--radius-full); background: var(--color-action-accent); }
+</style>

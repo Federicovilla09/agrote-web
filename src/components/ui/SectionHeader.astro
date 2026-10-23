@@ -1,0 +1,33 @@
+---
+// SectionHeader: eyebrow + título + bajada, con un enlace opcional a la derecha.
+import Eyebrow from "./Eyebrow.astro";
+import Button from "./Button.astro";
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  description?: string;
+  link?: { label: string; href: string };
+  tone?: "light" | "dark";
+  size?: "lg" | "md"; // lg = Display L, md = H1 (en desktop)
+  id?: string;        // id del título, para conectarlo con la sección (aria-labelledby)
+}
+const { eyebrow, title, description, link, tone = "light", size = "md", id } = Astro.props;
+---
+
+<div class:list={["encabezado", { oscuro: tone === "dark" }]}>
+  <div class="textos">
+    <Eyebrow tone={tone}>{eyebrow}</Eyebrow>
+    <h2 id={id} class:list={[size === "lg" ? "text-display-l" : "text-h1"]}>{title}</h2>
+    {description && <p class="text-body-l bajada">{description}</p>}
+  </div>
+  {link && <Button href={link.href} variant="link" icon="flecha-derecha">{link.label}</Button>}
+</div>
+
+<style>
+  .encabezado { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--space-4); }
+  .textos { display: grid; gap: var(--space-3); max-width: 44rem; }
+  .bajada { color: var(--color-text-secondary); }
+  .oscuro h2 { color: var(--color-text-inverse); }
+  .oscuro .bajada { color: var(--color-text-inverse-secondary); }
+</style>

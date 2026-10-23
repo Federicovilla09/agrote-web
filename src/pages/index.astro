@@ -1,34 +1,27 @@
 ---
-// Inicio provisorio para probar la estructura global.
-// En la etapa 6 lo reemplazamos por el inicio real.
+// Inicio: cada sección es un componente de src/components/home.
 import SiteLayout from "../layouts/SiteLayout.astro";
+import Hero from "../components/home/Hero.astro";
+import Lineas from "../components/home/Lineas.astro";
+import Ofertas from "../components/home/Ofertas.astro";
+import PrecisionDestacado from "../components/home/PrecisionDestacado.astro";
+import UsadosDestacados from "../components/home/UsadosDestacados.astro";
+import Posventa from "../components/home/Posventa.astro";
+import Empresa from "../components/home/Empresa.astro";
+import Contacto from "../components/home/Contacto.astro";
 ---
 
-<SiteLayout title="Inicio" header="overlay">
-  <section class="hero" data-hero>
-    <div class="container">
-      <p class="text-data-s eyebrow">Concesionaria agrícola · Litoral</p>
-      <h1 class="text-display-xl">Del tractor al dron</h1>
-      <p class="text-body-l">Hacé scroll: el header pasa a sólido al salir de este bloque y aparece el WhatsApp flotante.</p>
-    </div>
-  </section>
-
-  <section class="container relleno">
-    <h2 class="text-h1">Contenido de prueba</h2>
-    <p class="text-body-l">En mobile, el header se esconde al bajar y vuelve al subir. Probá también el menú (achicá la ventana por debajo de 1024 px).</p>
-  </section>
+<SiteLayout
+  title="Maquinaria, tecnología y posventa"
+  description="Del tractor al dron: maquinaria nueva y usada, agricultura de precisión y posventa. Prototipo conceptual de rediseño."
+  header="overlay"
+>
+  <Hero />
+  <Lineas />
+  <Ofertas />
+  <PrecisionDestacado />
+  <UsadosDestacados />
+  <Posventa />
+  <Empresa />
+  <Contacto />
 </SiteLayout>
-
-<style>
-  .hero {
-    display: flex;
-    align-items: flex-end;
-    min-height: 90vh;
-    padding-block: var(--space-24) var(--space-12);
-    background: var(--color-bg-media);
-    color: var(--color-text-inverse);
-  }
-  .hero .container { display: grid; gap: var(--space-4); }
-  .eyebrow { color: var(--color-text-inverse-secondary); }
-  .relleno { display: grid; gap: var(--space-6); min-height: 150vh; padding-block: var(--space-16); }
-</style>

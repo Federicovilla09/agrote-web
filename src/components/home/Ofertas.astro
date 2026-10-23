@@ -1,0 +1,24 @@
+---
+import { ofertas } from "../../data";
+import SectionHeader from "../ui/SectionHeader.astro";
+import Carrusel from "../ui/Carrusel.astro";
+import OfferCard from "../cards/OfferCard.astro";
+---
+
+<section class="seccion" aria-labelledby="ofertas-titulo">
+  <div class="container interior">
+    <SectionHeader
+      id="ofertas-titulo"
+      eyebrow="Ofertas vigentes"
+      title="Oportunidades del mes"
+      link={{ label: "Ver todas las ofertas", href: "/nuevos/tractores" }}
+    />
+    <Carrusel label="Ofertas vigentes" columnas={3}>
+      {ofertas.map((oferta) => <OfferCard oferta={oferta} />)}
+    </Carrusel>
+  </div>
+</section>
+
+<style>
+  .interior { display: grid; gap: var(--space-8); }
+</style>

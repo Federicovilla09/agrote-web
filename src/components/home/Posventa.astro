@@ -1,0 +1,66 @@
+---
+import { whatsappUrl } from "../../lib/whatsapp";
+import Eyebrow from "../ui/Eyebrow.astro";
+import Button from "../ui/Button.astro";
+import Icon from "../ui/Icon.astro";
+
+const servicios = [
+  { titulo: "Servicio técnico", texto: "Atención en taller y en campo para mantener tu equipo en marcha.", icono: "llave" as const },
+  { titulo: "Repuestos", texto: "Originales y alternativos. Consultá disponibilidad por modelo.", icono: "check" as const },
+];
+---
+
+<section id="posventa" class="seccion posventa" aria-labelledby="posventa-titulo">
+  <div class="container interior">
+    <div class="texto">
+      <Eyebrow>Posventa</Eyebrow>
+      <h2 id="posventa-titulo" class="text-h1">Te acompañamos después de la compra</h2>
+      <p class="text-body-l bajada">Servicio técnico y repuestos para que tu equipo no se detenga en plena campaña.</p>
+    </div>
+    <ul class="tarjetas">
+      {servicios.map((s) => (
+        <li class="tarjeta">
+          <span class="icono"><Icon name={s.icono} /></span>
+          <h3 class="text-h2">{s.titulo}</h3>
+          <p class="bajada">{s.texto}</p>
+          <Button href={whatsappUrl(`Hola, quiero consultar por ${s.titulo.toLowerCase()}.`)} target="_blank" variant="link" icon="flecha-derecha">
+            Consultar
+          </Button>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .posventa { background: var(--color-bg-subtle); }
+  .interior { display: grid; gap: var(--space-8); }
+  .texto { display: grid; gap: var(--space-4); }
+  .bajada { color: var(--color-text-secondary); }
+  .tarjetas { display: grid; gap: var(--space-4); padding: 0; list-style: none; }
+  .tarjeta {
+    display: grid;
+    gap: var(--space-3);
+    justify-items: start;
+    padding: var(--space-6);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-lg);
+    background: var(--color-bg-page);
+  }
+  .icono {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-full);
+    background: var(--color-action-accent);
+    color: var(--color-action-on-accent);
+  }
+  @media (min-width: 768px) {
+    .tarjetas { grid-template-columns: 1fr 1fr; }
+  }
+  @media (min-width: 1024px) {
+    .interior { grid-template-columns: 420px 1fr; gap: var(--space-16); align-items: start; }
+    .tarjeta { padding: var(--space-8); }
+  }
+</style>
