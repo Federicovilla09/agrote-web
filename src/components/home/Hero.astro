@@ -1,5 +1,5 @@
 ---
-// Hero del inicio: video de fondo con la foto del atardecer como portada.
+// Hero del inicio: video de fondo desde el primer momento, con su primer cuadro como portada.
 import { optimizar } from "../../lib/imagenes";
 import { whatsappUrl } from "../../lib/whatsapp";
 import Eyebrow from "../ui/Eyebrow.astro";
@@ -8,34 +8,28 @@ import Icon from "../ui/Icon.astro";
 import Foto from "../ui/Foto.astro";
 import Tag from "../ui/Tag.astro";
 
-const portada = await optimizar("tractor-atardecer", [480, 960, 1600]);
+// Portada: el primer cuadro del video (si existe src/assets/images/hero-poster.jpg)
+const poster = await optimizar("hero-poster", [1600]);
 const dron = await optimizar("dron-vuelo", [480]);
 ---
 
 <section class="hero" data-hero aria-labelledby="hero-titulo">
-  <!-- Portada: se ve mientras carga el video, o siempre si el video no se reproduce -->
-  {
-    portada && (
-      <img
-        class="fondo"
-        src={portada.src}
-        srcset={portada.srcset}
-        sizes="100vw"
-        alt=""
-        fetchpriority="high"
-      />
-    )
-  }
+  <!-- El poster es el primer cuadro del video: no hay salto visual cuando arranca.
+       preload="metadata" baja solo lo mínimo; el script lo reproduce enseguida
+       salvo con "reducir movimiento" o ahorro de datos. -->
   <video
-    class="fondo video"
+    class="fondo"
     data-video
-    data-src-mobile="/video/hero-mobile.mp4"
-    data-src-desktop="/video/hero-desktop.mp4"
     muted
     loop
     playsinline
-    preload="none"
-    aria-hidden="true"></video>
+    preload="metadata"
+    poster={poster?.src}
+    aria-hidden="true"
+  >
+    <source src="/video/hero-desktop.mp4" type="video/mp4" media="(min-width: 768px)" />
+    <source src="/video/hero-mobile.mp4" type="video/mp4" />
+  </video>
   <div class="degradado" aria-hidden="true"></div>
 
   <div class="container contenido">
@@ -43,19 +37,11 @@ const dron = await optimizar("dron-vuelo", [480]);
       <Eyebrow tone="dark">Concesionaria agrícola · Litoral</Eyebrow>
       <h1 id="hero-titulo" class="text-display-xl">Del tractor al dron</h1>
       <p class="text-body-l bajada">
-        Equipamos tu campo y te acompañamos después: maquinaria nueva y usada,
-        tecnología de precisión y posventa.
+        Equipamos tu campo y te acompañamos después: maquinaria nueva y usada, tecnología de precisión y posventa.
       </p>
       <div class="acciones">
-        <Button href="/nuevos/tractores" variant="accent" icon="flecha-derecha"
-          >Explorar catálogo</Button
-        >
-        <Button
-          href={whatsappUrl("Hola, quiero hacer una consulta.")}
-          target="_blank"
-          variant="light"
-          icon="chat"
-        >
+        <Button href="/nuevos/tractores" variant="accent" icon="flecha-derecha">Explorar catálogo</Button>
+        <Button href={whatsappUrl("Hola, quiero hacer una consulta.")} target="_blank" variant="light" icon="chat">
           Consultar por WhatsApp
         </Button>
       </div>
@@ -63,18 +49,10 @@ const dron = await optimizar("dron-vuelo", [480]);
 
     <!-- Tarjeta destacada: solo desktop -->
     <a class="destacada" href="/precision-y-drones">
-      <Foto
-        imagen={dron}
-        alt=""
-        ratio="16 / 9"
-        sizes="268px"
-        class="destacada-foto"
-      />
+      <Foto imagen={dron} alt="" ratio="16 / 9" sizes="268px" class="destacada-foto" />
       <Tag tone="offer">Nuevo</Tag>
       <span class="destacada-titulo">Drones de pulverización y mapeo</span>
-      <span class="destacada-link"
-        >Conocer más <Icon name="flecha-derecha" size={18} /></span
-      >
+      <span class="destacada-link">Conocer más <Icon name="flecha-derecha" size={18} /></span>
     </a>
   </div>
 
@@ -83,8 +61,9 @@ const dron = await optimizar("dron-vuelo", [480]);
       Deslizá para descubrir
       <span class="flecha"><Icon name="chevron-abajo" size={18} /></span>
     </button>
-    <button type="button" class="pausa" data-pausa hidden aria-pressed="false">
-      <Icon name="pausa" size={18} label="Pausar video" />
+    <button type="button" class="pausa" data-pausa aria-pressed="false" aria-label="Pausar video">
+      <Icon name="pausa" size={18} class="icono-pausa" />
+      <Icon name="reproducir" size={18} class="icono-reproducir" />
     </button>
   </div>
 </section>
@@ -102,20 +81,7 @@ const dron = await optimizar("dron-vuelo", [480]);
     color: var(--color-text-inverse);
   }
 
-  .fondo {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .video {
-    opacity: 0;
-    transition: opacity 600ms;
-  }
-  .video.reproduciendo {
-    opacity: 1;
-  }
+  .fondo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 
   /* Oscurece arriba (para el header) y abajo (para el texto) */
   .degradado {
@@ -126,49 +92,19 @@ const dron = await optimizar("dron-vuelo", [480]);
       linear-gradient(to top, rgb(12 16 24 / 0.92) 10%, rgb(14 35 80 / 0) 70%);
   }
 
-  .contenido,
-  .controles {
-    position: relative;
-  }
-  .fondo,
-  .contenido,
-  .controles {
-    transition:
-      transform 900ms cubic-bezier(0.65, 0, 0.35, 1),
-      opacity 600ms ease;
-  }
-  .hero.abriendo .fondo {
-    transform: scale(1.08);
-  }
-  .hero.abriendo .contenido,
-  .hero.abriendo .controles {
-    transform: translateY(-40px);
-    opacity: 0;
-  }
-  .contenido {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: var(--space-8);
-  }
-  .principal {
-    display: grid;
-    gap: var(--space-4);
-    max-width: 44rem;
-  }
-  .bajada {
-    color: var(--color-text-inverse-secondary);
-    max-width: 36rem;
-  }
-  .acciones {
-    display: grid;
-    gap: var(--space-3);
-    padding-top: var(--space-2);
-  }
+  .contenido, .controles { position: relative; }
 
-  .destacada {
-    display: none;
-  }
+  /* Transición de apertura: el contenido sube y se desvanece, la imagen se acerca */
+  .fondo, .contenido, .controles { transition: transform 900ms cubic-bezier(0.65, 0, 0.35, 1), opacity 600ms ease; }
+  .hero.abriendo .fondo { transform: scale(1.08); }
+  .hero.abriendo .contenido,
+  .hero.abriendo .controles { transform: translateY(-40px); opacity: 0; }
+  .contenido { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-8); }
+  .principal { display: grid; gap: var(--space-4); max-width: 44rem; }
+  .bajada { color: var(--color-text-inverse-secondary); max-width: 36rem; }
+  .acciones { display: grid; gap: var(--space-3); padding-top: var(--space-2); }
+
+  .destacada { display: none; }
 
   .controles {
     display: flex;
@@ -177,17 +113,7 @@ const dron = await optimizar("dron-vuelo", [480]);
     padding-block: var(--space-6);
     color: var(--color-text-inverse-secondary);
   }
-  .pausa {
-    display: grid;
-    place-items: center;
-    width: 44px;
-    height: 44px;
-    border: 1px solid currentColor;
-    border-radius: var(--radius-full);
-    color: var(--color-text-inverse);
-  }
-
-    .descubrir {
+  .descubrir {
     display: inline-flex;
     align-items: center;
     gap: var(--space-2);
@@ -201,11 +127,22 @@ const dron = await optimizar("dron-vuelo", [480]);
   .flecha { display: grid; animation: invitar 1.8s ease-in-out infinite; }
   @keyframes invitar { 50% { transform: translateY(4px); } }
 
+  .pausa {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid currentColor;
+    border-radius: var(--radius-full);
+    color: var(--color-text-inverse);
+  }
+  /* El botón muestra "pausa" mientras corre y "reproducir" cuando está pausado */
+  .pausa :global(.icono-reproducir) { display: none; }
+  .pausa[aria-pressed="true"] :global(.icono-pausa) { display: none; }
+  .pausa[aria-pressed="true"] :global(.icono-reproducir) { display: block; }
+
   @media (min-width: 768px) {
-    .acciones {
-      display: flex;
-      flex-wrap: wrap;
-    }
+    .acciones { display: flex; flex-wrap: wrap; }
   }
 
   @media (min-width: 1024px) {
@@ -214,9 +151,7 @@ const dron = await optimizar("dron-vuelo", [480]);
         linear-gradient(to bottom, rgb(12 16 24 / 0.5), transparent 25%),
         linear-gradient(to right, rgb(12 16 24 / 0.9), rgb(14 35 80 / 0.15) 65%);
     }
-    .controles {
-      padding-block: var(--space-12);
-    }
+    .controles { padding-block: var(--space-12); }
     .destacada {
       display: grid;
       gap: var(--space-3);
@@ -229,24 +164,10 @@ const dron = await optimizar("dron-vuelo", [480]);
       text-decoration: none;
       justify-items: start;
     }
-    .destacada :global(.destacada-foto) {
-      border-radius: var(--radius-sm);
-    }
-    .destacada-titulo {
-      font-family: var(--font-display);
-      font-size: var(--text-heading-h3);
-      line-height: var(--text-heading-h3-lh);
-      font-weight: 800;
-    }
-    .destacada-link {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--space-2);
-      font-weight: 700;
-    }
-    .destacada:hover .destacada-link {
-      text-decoration: underline;
-    }
+    .destacada :global(.destacada-foto) { border-radius: var(--radius-sm); }
+    .destacada-titulo { font-family: var(--font-display); font-size: var(--text-heading-h3); line-height: var(--text-heading-h3-lh); font-weight: 800; }
+    .destacada-link { display: inline-flex; align-items: center; gap: var(--space-2); font-weight: 700; }
+    .destacada:hover .destacada-link { text-decoration: underline; }
   }
 </style>
 
@@ -261,47 +182,31 @@ const dron = await optimizar("dron-vuelo", [480]);
   const video = document.querySelector<HTMLVideoElement>("[data-video]");
   const pausa = document.querySelector<HTMLButtonElement>("[data-pausa]");
 
-  // Respetamos "reducir movimiento" y el modo de ahorro de datos:
-  // en esos casos no se descarga el video y queda la foto.
-  const reducirMovimiento = window.matchMedia(
-    "(prefers-reduced-motion: reduce)",
-  ).matches;
-  const ahorroDatos = (
-    navigator as Navigator & { connection?: { saveData?: boolean } }
-  ).connection?.saveData;
+  if (video && pausa) {
+    // Con "reducir movimiento" o ahorro de datos, el video arranca pausado (se ve el primer cuadro)
+    const reducirMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const ahorroDatos = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
 
-  if (video && pausa && !reducirMovimiento && !ahorroDatos) {
-    // Elegimos la versión según el ancho de pantalla
-    const esMobile = window.matchMedia("(max-width: 767px)").matches;
-    video.src =
-      (esMobile ? video.dataset.srcMobile : video.dataset.srcDesktop) ?? "";
+    const mostrarEstado = (pausado: boolean) => {
+      pausa.setAttribute("aria-pressed", String(pausado));
+      pausa.setAttribute("aria-label", pausado ? "Reproducir video" : "Pausar video");
+    };
 
-    // Cuando arranca, el video aparece suavemente sobre la portada
-    video.addEventListener(
-      "playing",
-      () => video.classList.add("reproduciendo"),
-      { once: true },
-    );
-    video
-      .play()
-      .then(() => {
-        pausa.hidden = false;
-      })
-      .catch(() => {
-        // Si el navegador bloquea la reproducción, queda la foto
-      });
+    if (reducirMovimiento || ahorroDatos) {
+      mostrarEstado(true);
+    } else {
+      // play() devuelve una promesa: si el navegador bloquea la reproducción, queda pausado
+      video.play().then(() => mostrarEstado(false)).catch(() => mostrarEstado(true));
+    }
 
     pausa.addEventListener("click", () => {
-      const pausar = !video.paused;
-      if (pausar) video.pause();
-      else video.play();
-      pausa.setAttribute("aria-pressed", String(pausar));
-      pausa
-        .querySelector("svg")
-        ?.setAttribute(
-          "aria-label",
-          pausar ? "Reproducir video" : "Pausar video",
-        );
+      if (video.paused) {
+        video.play();
+        mostrarEstado(false);
+      } else {
+        video.pause();
+        mostrarEstado(true);
+      }
     });
   }
 </script>
