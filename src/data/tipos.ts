@@ -8,6 +8,7 @@ export interface Producto {
   linea: "agricola" | "construccion";
   condicion: "nuevo" | "usado";
   potenciaHp: number;
+  traccion?: "4x4" | "4x2";  // solo tractores
   resumen: string;           // los datos clave de la tarjeta
   descripcion: string;
   imagen?: string;           // nombre del archivo en src/assets/images, sin extensión

@@ -1,0 +1,61 @@
+---
+// Listado de tractores: título estático (Astro) + isla de filtros y resultados (React).
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import Breadcrumb from "../../components/ui/Breadcrumb.astro";
+import Eyebrow from "../../components/ui/Eyebrow.astro";
+import Button from "../../components/ui/Button.astro";
+import Listado from "../../components/listado/Listado";
+import { tractores } from "../../data";
+import { optimizar } from "../../lib/imagenes";
+import { whatsappUrl } from "../../lib/whatsapp";
+
+// Preparamos las imágenes en el servidor y las pasamos a la isla como un objeto { slug: imagen }
+const imagenes = Object.fromEntries(
+  await Promise.all(tractores.map(async (p) => [p.slug, await optimizar(p.imagen, [480, 960])])),
+);
+---
+
+<SiteLayout title="Tractores" description="Tractores nuevos y usados para cada etapa de la campaña. Prototipo conceptual de rediseño.">
+  <section class="titulo container">
+    <Breadcrumb items={[{ label: "Inicio", href: "/" }, { label: "Nuevos", href: "/nuevos/tractores" }, { label: "Tractores" }]} />
+    <Eyebrow>Maquinaria agrícola</Eyebrow>
+    <h1 class="text-display-l">Tractores</h1>
+    <p class="text-body-l bajada">Tractores utilitarios y de alta potencia para cada etapa de la campaña.</p>
+  </section>
+
+  <section class="resultados" aria-label="Resultados">
+    <div class="container">
+      <Listado client:load productos={tractores} imagenes={imagenes} />
+    </div>
+  </section>
+
+  <section class="ayuda seccion">
+    <div class="container ayuda-interior">
+      <div>
+        <Eyebrow tone="dark">Asesoramiento</Eyebrow>
+        <h2 class="text-h1">¿No encontrás el equipo que buscás?</h2>
+        <p class="text-body-l">Te ayudamos a encontrar la opción para tu campo.</p>
+      </div>
+      <Button href={whatsappUrl("Hola, busco un tractor y quiero asesoramiento.")} target="_blank" variant="accent" icon="chat">
+        Consultar por WhatsApp
+      </Button>
+    </div>
+  </section>
+</SiteLayout>
+
+<style>
+  .titulo { display: grid; gap: var(--space-3); padding-block: var(--space-6) var(--space-8); }
+  .bajada { color: var(--color-text-secondary); max-width: 40rem; }
+  .resultados { padding-block: var(--space-6) var(--space-16); background: var(--color-bg-subtle); }
+
+  .ayuda { background: var(--color-bg-media); color: var(--color-text-inverse); }
+  .ayuda-interior { display: grid; gap: var(--space-6); justify-items: start; }
+  .ayuda-interior > div { display: grid; gap: var(--space-3); }
+  .ayuda p { color: var(--color-text-inverse-secondary); }
+
+  @media (min-width: 1024px) {
+    .titulo { padding-block: var(--space-10) var(--space-10); }
+    .resultados { padding-block: var(--space-10) var(--space-24); }
+    .ayuda-interior { grid-template-columns: 1fr auto; align-items: end; }
+  }
+</style>

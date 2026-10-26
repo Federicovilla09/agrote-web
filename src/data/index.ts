@@ -16,6 +16,7 @@ export const lineas = lineasJson as LineaNegocio[];
 export const eventos = eventosJson as Evento[];
 
 export const usadosDestacados = productos.filter((p) => p.condicion === "usado" && p.destacado);
+export const tractores = productos.filter((p) => p.categoria === "Tractor");
 export const tractoresNuevos = productos.filter((p) => p.categoria === "Tractor" && p.condicion === "nuevo");
 
 export type { Producto, Oferta, Dron, Entrega, LineaNegocio, Evento };
