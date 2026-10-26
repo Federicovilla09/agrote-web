@@ -1,0 +1,52 @@
+---
+// Respaldo después de la compra: refuerza el pilar de acompañamiento.
+import Icon from "../ui/Icon.astro";
+
+const items = [
+  { titulo: "Servicio técnico", texto: "Atención en taller y en campo para que tu equipo no se detenga.", icono: "llave" as const },
+  { titulo: "Repuestos", texto: "Originales y alternativos para este modelo.", icono: "check" as const },
+  { titulo: "Asesoramiento", texto: "Te ayudamos a elegir implementos compatibles.", icono: "chat" as const },
+];
+---
+
+<section class="seccion" aria-labelledby="respaldo-titulo">
+  <div class="container interior">
+    <h2 id="respaldo-titulo" class="text-h1">Respaldo después de la compra</h2>
+    <ul class="lista">
+      {items.map((item) => (
+        <li class="item">
+          <span class="icono"><Icon name={item.icono} size={22} /></span>
+          <div>
+            <h3 class="titulo">{item.titulo}</h3>
+            <p class="text-body-s texto">{item.texto}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .interior { display: grid; gap: var(--space-6); }
+  .lista { display: grid; gap: var(--space-5); padding: 0; list-style: none; }
+  .item { display: flex; gap: var(--space-4); align-items: flex-start; }
+  .icono {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-full);
+    background: var(--color-action-accent);
+    color: var(--color-action-on-accent);
+  }
+  .titulo { font-family: var(--font-body); font-size: var(--text-body-m); font-weight: 700; }
+  .texto { color: var(--color-text-secondary); }
+
+  @media (min-width: 1024px) {
+    .lista { grid-template-columns: repeat(3, 1fr); gap: var(--space-6); }
+    .item { flex-direction: column; gap: var(--space-4); padding: var(--space-8); border-radius: var(--radius-lg); background: var(--color-bg-subtle); }
+    .icono { width: 48px; height: 48px; }
+    .titulo { font-family: var(--font-display); font-size: var(--text-heading-h2); line-height: var(--text-heading-h2-lh); font-weight: 800; }
+  }
+</style>

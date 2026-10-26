@@ -1,0 +1,92 @@
+---
+// Resumen de la ficha: etiquetas, nombre, datos clave y botones de consulta.
+// En desktop es una tarjeta que acompaña el scroll al lado de la galería.
+import type { Producto } from "../../data/tipos";
+import { datosClaveDe } from "../../data/especificaciones";
+import { whatsappUrl, mensajeProducto } from "../../lib/whatsapp";
+import Tag from "../ui/Tag.astro";
+import Button from "../ui/Button.astro";
+import Icon from "../ui/Icon.astro";
+
+interface Props {
+  producto: Producto;
+}
+const { producto } = Astro.props;
+const esNuevo = producto.condicion === "nuevo";
+const datos = datosClaveDe(producto);
+---
+
+<aside class="resumen" data-resumen aria-labelledby="ficha-titulo">
+  <div class="etiquetas">
+    <Tag tone="neutral">{producto.categoria}</Tag>
+    <Tag tone={esNuevo ? "offer" : "dark"}>{esNuevo ? "Nuevo · Demo" : "Usado · Demo"}</Tag>
+  </div>
+
+  <h1 id="ficha-titulo" class="text-h1">{producto.modelo}</h1>
+  <p class="descripcion">{producto.descripcion}</p>
+
+  <dl class="datos">
+    {datos.map((dato) => (
+      <div>
+        <dt class="text-data-s">{dato.label}</dt>
+        <dd class="text-h2">{dato.valor}</dd>
+      </div>
+    ))}
+  </dl>
+
+  <div class="acciones">
+    <Button href={whatsappUrl(mensajeProducto(producto.modelo))} target="_blank" icon="chat" fullWidth>
+      Consultar por WhatsApp
+    </Button>
+    <Button
+      href={whatsappUrl(`Hola, ¿me pueden enviar el folleto del ${producto.modelo}?`)}
+      target="_blank"
+      variant="secondary"
+      icon="documento"
+      fullWidth
+    >
+      Pedir folleto (PDF)
+    </Button>
+  </div>
+
+  <p class="nota text-body-s">
+    <Icon name="check" size={18} />
+    Un asesor confirma disponibilidad y precio. Datos de demostración.
+  </p>
+</aside>
+
+<style>
+  .resumen { display: grid; gap: var(--space-4); align-content: start; }
+  .etiquetas { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .descripcion { color: var(--color-text-secondary); }
+
+  /* Datos clave en una grilla de 2 × 2, con el valor grande arriba */
+  .datos { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2); }
+  .datos div {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: var(--space-1);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-subtle);
+  }
+  .datos dt { color: var(--color-text-secondary); }
+
+  .acciones { display: grid; gap: var(--space-3); padding-top: var(--space-2); }
+
+  .nota { display: flex; gap: var(--space-2); align-items: flex-start; color: var(--color-text-secondary); }
+  .nota :global(svg) { flex-shrink: 0; color: var(--color-feedback-success); }
+
+  @media (min-width: 1024px) {
+    .resumen {
+      position: sticky;
+      top: 104px; /* queda fijo debajo del header mientras se recorre la galería */
+      gap: var(--space-5);
+      padding: var(--space-8);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-xl);
+      background: var(--color-bg-page);
+      box-shadow: var(--shadow-md);
+    }
+  }
+</style>

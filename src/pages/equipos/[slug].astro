@@ -1,0 +1,88 @@
+---
+// Ficha de producto: UN archivo que genera una página por cada producto del JSON.
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import Breadcrumb from "../../components/ui/Breadcrumb.astro";
+import Galeria, { type FotoGaleria } from "../../components/ficha/Galeria";
+import Resumen from "../../components/ficha/Resumen.astro";
+import Especificaciones from "../../components/ficha/Especificaciones.astro";
+import Respaldo from "../../components/ficha/Respaldo.astro";
+import Relacionados from "../../components/ficha/Relacionados.astro";
+import BarraConsulta from "../../components/ficha/BarraConsulta.astro";
+import { productos, type Producto } from "../../data";
+import { especificacionesDe } from "../../data/especificaciones";
+import { optimizar } from "../../lib/imagenes";
+
+// 1. getStaticPaths: le dice a Astro qué páginas crear.
+//    Una por producto, usando el slug como parte de la URL.
+export function getStaticPaths() {
+  return productos.map((producto) => ({
+    params: { slug: producto.slug },
+    props: { producto },
+  }));
+}
+
+// 2. Cada página recibe su producto por props
+interface Props {
+  producto: Producto;
+}
+const { producto } = Astro.props;
+
+// Breadcrumb: los tractores vuelven al listado; el resto, a usados
+const esTractor = producto.categoria === "Tractor";
+const listado =
+  producto.condicion === "usado"
+    ? "/nuevos/tractores?condicion=usado"
+    : "/nuevos/tractores";
+const migas = [
+  { label: "Inicio", href: "/" },
+  { label: esTractor ? "Tractores" : "Usados", href: listado },
+  { label: producto.modelo },
+];
+
+// Galería: la foto principal y 4 imágenes de prueba (la misma foto, oscurecida)
+const imagen = await optimizar(producto.imagen);
+const fotos: FotoGaleria[] = [
+  { imagen },
+  ...Array.from({ length: 4 }, () => ({ imagen, prueba: true })),
+];
+---
+
+<SiteLayout title={producto.modelo} description={producto.descripcion}>
+  <div class="container migas">
+    <Breadcrumb items={migas} />
+  </div>
+
+  <div class="container principal">
+    <Galeria client:load fotos={fotos} modelo={producto.modelo} />
+
+    <Resumen producto={producto} />
+  </div>
+
+  <Especificaciones grupos={especificacionesDe(producto)} />
+  <Respaldo />
+  <Relacionados producto={producto} />
+  <BarraConsulta producto={producto} />
+</SiteLayout>
+
+<style>
+  .migas {
+    padding-block: var(--space-4);
+  }
+  .principal {
+    display: grid;
+    gap: var(--space-6);
+    padding-bottom: var(--space-12);
+  }
+
+  @media (min-width: 1024px) {
+    .migas {
+      padding-block: var(--space-8) var(--space-6);
+    }
+    .principal {
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+      gap: var(--space-16);
+      align-items: start;
+      padding-bottom: var(--space-24);
+    }
+  }
+</style>

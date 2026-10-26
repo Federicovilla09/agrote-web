@@ -1,0 +1,59 @@
+---
+// Especificaciones técnicas.
+// Mobile: acordeón (el primer grupo abierto). Desktop: todos los grupos a la vista.
+import type { GrupoSpecs } from "../../data/especificaciones";
+import Accordion from "../ui/Accordion.astro";
+import SpecList from "../ui/SpecList.astro";
+
+interface Props {
+  grupos: GrupoSpecs[];
+}
+const { grupos } = Astro.props;
+---
+
+<section class="seccion especificaciones" aria-labelledby="specs-titulo">
+  <div class="container interior">
+    <h2 id="specs-titulo" class="text-h1">Especificaciones</h2>
+
+    <!-- Mobile -->
+    <div class="movil">
+      {grupos.map((grupo, i) => (
+        <Accordion title={grupo.titulo} open={i === 0}>
+          <SpecList items={grupo.filas} />
+        </Accordion>
+      ))}
+    </div>
+
+    <!-- Desktop -->
+    <div class="escritorio">
+      {grupos.map((grupo) => (
+        <div class="grupo">
+          <h3 class="text-h3">{grupo.titulo}</h3>
+          <SpecList items={grupo.filas} />
+        </div>
+      ))}
+    </div>
+
+    <p class="text-data-s nota">Especificaciones de demostración.</p>
+  </div>
+</section>
+
+<style>
+  .especificaciones { background: var(--color-bg-subtle); }
+  .interior { display: grid; gap: var(--space-6); }
+  .movil { display: grid; gap: var(--space-3); }
+  .escritorio { display: none; }
+  .nota { color: var(--color-text-secondary); }
+
+  @media (min-width: 1024px) {
+    .movil { display: none; }
+    .escritorio { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); align-items: start; }
+    .grupo {
+      display: grid;
+      gap: var(--space-3);
+      padding: var(--space-6) var(--space-8);
+      border-radius: var(--radius-lg);
+      background: var(--color-bg-page);
+    }
+  }
+</style>

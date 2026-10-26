@@ -56,6 +56,7 @@ export default function Listado({ productos, imagenes }: ListadoProps) {
     setFiltros(nuevos);
     setVisibles(POR_PAGINA);
     window.history.replaceState(null, "", escribirEnUrl(nuevos));
+    window.dispatchEvent(new Event("filtros-cambiados"));
     simularCarga();
   }
 

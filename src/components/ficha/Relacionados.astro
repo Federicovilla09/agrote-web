@@ -1,0 +1,46 @@
+---
+// Equipos relacionados: misma categoría y condición, sin repetir el actual.
+import { productos, type Producto } from "../../data";
+import { optimizar } from "../../lib/imagenes";
+import SectionHeader from "../ui/SectionHeader.astro";
+import Carrusel from "../ui/Carrusel.astro";
+import ProductCard from "../cards/ProductCard";
+
+interface Props {
+  producto: Producto;
+}
+const { producto } = Astro.props;
+
+// Primero los de la misma categoría y condición; si no alcanzan, completamos con la misma condición
+const parecidos = productos.filter(
+  (p) => p.slug !== producto.slug && p.categoria === producto.categoria && p.condicion === producto.condicion,
+);
+const otros = productos.filter(
+  (p) => p.slug !== producto.slug && p.condicion === producto.condicion && !parecidos.includes(p),
+);
+const relacionados = [...parecidos, ...otros].slice(0, 4);
+const imagenes = await Promise.all(relacionados.map((p) => optimizar(p.imagen, [480, 960])));
+
+const listado = producto.condicion === "usado" ? "/nuevos/tractores?condicion=usado" : "/nuevos/tractores";
+---
+
+{relacionados.length > 0 && (
+  <section class="seccion relacionados" aria-labelledby="relacionados-titulo">
+    <div class="container interior">
+      <SectionHeader
+        id="relacionados-titulo"
+        eyebrow={producto.condicion === "usado" ? "Más usados" : "Más equipos"}
+        title="También te puede interesar"
+        link={{ label: "Ver todos", href: listado }}
+      />
+      <Carrusel label="Equipos relacionados" columnas={4}>
+        {relacionados.map((p, i) => <ProductCard producto={p} imagen={imagenes[i]} />)}
+      </Carrusel>
+    </div>
+  </section>
+)}
+
+<style>
+  .relacionados { background: var(--color-bg-subtle); }
+  .interior { display: grid; gap: var(--space-8); }
+</style>

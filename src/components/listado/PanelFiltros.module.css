@@ -1,9 +1,13 @@
 .panel { display: grid; gap: var(--space-6); }
 
-.grupo { display: grid; gap: var(--space-3); padding: 0; border: 0; margin: 0; }
+.grupo { padding: 0; border: 0; margin: 0; }
 .grupo + .grupo { padding-top: var(--space-6); border-top: 1px solid var(--color-border-default); }
 
 .titulo {
+  /* El legend se "monta" sobre el borde del fieldset: flotarlo lo devuelve al flujo normal */
+  float: left;
+  width: 100%;
+  margin-bottom: var(--space-3);
   padding: 0;
   font-family: var(--font-mono);
   font-size: var(--text-data-eyebrow);
@@ -12,6 +16,8 @@
   letter-spacing: 0.08em;
   color: var(--color-text-secondary);
 }
+
+.titulo + * { clear: both; }
 
 .chips { display: flex; flex-wrap: wrap; gap: var(--space-2); }
 .opciones { display: grid; gap: var(--space-1); }

@@ -1,0 +1,76 @@
+---
+// Barra fija de consulta (solo mobile): aparece cuando el resumen sale de pantalla,
+// así el botón de consulta siempre queda a mano mientras se recorre la ficha.
+import type { Producto } from "../../data/tipos";
+import { whatsappUrl, mensajeProducto } from "../../lib/whatsapp";
+import Button from "../ui/Button.astro";
+
+interface Props {
+  producto: Producto;
+}
+const { producto } = Astro.props;
+---
+
+<div class="barra" data-barra>
+  <div class="texto">
+    <p class="modelo">{producto.modelo}</p>
+    <p class="text-data-s detalle">{producto.condicion === "nuevo" ? "Nuevo" : "Usado"} · Demo</p>
+  </div>
+  <Button href={whatsappUrl(mensajeProducto(producto.modelo))} target="_blank" size="sm" icon="chat">Consultar</Button>
+</div>
+
+<style>
+  .barra {
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 45;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-3) var(--layout-margin-mobile);
+    padding-bottom: calc(var(--space-3) + env(safe-area-inset-bottom)); /* respeta la barra de inicio del iPhone */
+    border-top: 1px solid var(--color-border-default);
+    background: var(--color-bg-page);
+    box-shadow: var(--shadow-md);
+    /* Escondida: fuera de pantalla e inaccesible (visibility cambia al final de la animación) */
+    transform: translateY(100%);
+    visibility: hidden;
+    transition: transform 250ms ease, visibility 0s 250ms;
+  }
+  .barra.visible {
+    transform: none;
+    visibility: visible;
+    transition: transform 250ms ease;
+  }
+
+  .texto { min-width: 0; }
+  .modelo { overflow: hidden; font-weight: 700; white-space: nowrap; text-overflow: ellipsis; }
+  .detalle { color: var(--color-text-secondary); }
+
+  /* Reservamos espacio abajo para que la barra no tape el final del footer */
+  @media (max-width: 1023px) {
+    :global(body:has([data-barra])) { padding-bottom: 72px; }
+  }
+
+  /* En desktop no hace falta: el resumen ya queda fijo al costado */
+  @media (min-width: 1024px) {
+    .barra { display: none; }
+  }
+</style>
+
+<script>
+  const barra = document.querySelector<HTMLElement>("[data-barra]");
+  const resumen = document.querySelector("[data-resumen]");
+
+  if (barra && resumen) {
+    new IntersectionObserver(([entrada]) => {
+      // Visible solo cuando el resumen quedó ARRIBA de la pantalla (ya lo pasaste)
+      const yaPaso = !entrada.isIntersecting && entrada.boundingClientRect.top < 0;
+      barra.classList.toggle("visible", yaPaso);
+      // Avisamos al WhatsApp flotante que se esconda, para que no se superpongan
+      document.documentElement.toggleAttribute("data-barra-visible", yaPaso);
+    }).observe(resumen);
+  }
+</script>
