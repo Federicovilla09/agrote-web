@@ -5,6 +5,8 @@ import "@fontsource/atkinson-hyperlegible/latin-700";
 import "@fontsource/ibm-plex-mono/latin-400";
 import "@fontsource/ibm-plex-mono/latin-500";
 import "../styles/global.css";
+import fuenteTitulos from "@fontsource/big-shoulders-display/files/big-shoulders-display-latin-800-normal.woff2?url";
+import fuenteTexto from "@fontsource/atkinson-hyperlegible/files/atkinson-hyperlegible-latin-400-normal.woff2?url";
 
 interface Props {
   title: string;
@@ -23,6 +25,8 @@ const {
     <meta name="robots" content="noindex, nofollow" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preload" href={fuenteTitulos} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={fuenteTexto} as="font" type="font/woff2" crossorigin />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#0E2350" />
     <title>{`${title} · AgroTe`}</title>

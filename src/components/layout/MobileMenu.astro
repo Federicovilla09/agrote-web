@@ -17,31 +17,42 @@ import Icon from "../ui/Icon.astro";
 
   <nav aria-label="Principal (mobile)">
     <ul class="lista">
-      {menuPrincipal.map((item) => (
-        <li>
-          {item.hijos ? (
-            <details>
-              <summary>
+      {
+        menuPrincipal.map((item) => (
+          <li>
+            {item.hijos ? (
+              <details>
+                <summary>
+                  {item.label}
+                  <Icon name="chevron-abajo" size={20} class="chevron" />
+                </summary>
+                <ul class="sublista">
+                  {item.hijos.map((hijo) => (
+                    <li>
+                      <a href={hijo.href}>{hijo.label}</a>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            ) : (
+              <a href={item.href}>
                 {item.label}
-                <Icon name="chevron-abajo" size={20} class="chevron" />
-              </summary>
-              <ul class="sublista">
-                {item.hijos.map((hijo) => <li><a href={hijo.href}>{hijo.label}</a></li>)}
-              </ul>
-            </details>
-          ) : (
-            <a href={item.href}>
-              {item.label}
-              <Icon name="chevron-derecha" size={20} />
-            </a>
-          )}
-        </li>
-      ))}
+                <Icon name="chevron-derecha" size={20} />
+              </a>
+            )}
+          </li>
+        ))
+      }
     </ul>
   </nav>
 
   <div class="pie">
-    <Button href={whatsappUrl("Hola, quiero hacer una consulta.")} target="_blank" icon="chat" fullWidth>
+    <Button
+      href={whatsappUrl("Hola, quiero hacer una consulta.")}
+      target="_blank"
+      icon="chat"
+      fullWidth
+    >
       Consultar por WhatsApp
     </Button>
   </div>
@@ -59,8 +70,16 @@ import Icon from "../ui/Icon.astro";
     background: var(--color-bg-page);
     color: var(--color-text-primary);
   }
-  .menu[open] { display: flex; flex-direction: column; animation: entrar 250ms ease-out; }
-  @keyframes entrar { from { transform: translateX(100%); } }
+  .menu[open] {
+    display: flex;
+    flex-direction: column;
+    animation: entrar 250ms ease-out;
+  }
+  @keyframes entrar {
+    from {
+      transform: translateX(100%);
+    }
+  }
 
   .encabezado {
     display: flex;
@@ -70,12 +89,33 @@ import Icon from "../ui/Icon.astro";
     padding-inline: var(--layout-margin-mobile);
     border-bottom: 1px solid var(--color-border-default);
   }
-  .logo { font-family: var(--font-display); font-size: var(--text-heading-h3); font-weight: 800; text-decoration: none; }
-  .cerrar { display: grid; place-items: center; width: 44px; height: 44px; }
+  .logo {
+    font-family: var(--font-display);
+    font-size: var(--text-heading-h3);
+    font-weight: 800;
+    text-decoration: none;
+  }
+  .cerrar {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    margin-inline-end: -10px;
+  }
 
-  nav { flex: 1; overflow-y: auto; padding-inline: var(--layout-margin-mobile); }
-  .lista, .sublista { padding: 0; list-style: none; }
-  .lista > li { border-bottom: 1px solid var(--color-border-default); }
+  nav {
+    flex: 1;
+    overflow-y: auto;
+    padding-inline: var(--layout-margin-mobile);
+  }
+  .lista,
+  .sublista {
+    padding: 0;
+    list-style: none;
+  }
+  .lista > li {
+    border-bottom: 1px solid var(--color-border-default);
+  }
 
   .lista > li > a,
   summary {
@@ -90,22 +130,38 @@ import Icon from "../ui/Icon.astro";
     cursor: pointer;
     list-style: none;
   }
-  summary::-webkit-details-marker { display: none; }
-  details[open] :global(.chevron) { transform: rotate(180deg); }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  details[open] :global(.chevron) {
+    transform: rotate(180deg);
+  }
 
-  .sublista { padding: 0 0 var(--space-3) var(--space-4); }
-  .sublista a { display: block; padding-block: var(--space-2); color: var(--color-text-secondary); text-decoration: none; }
+  .sublista {
+    padding: 0 0 var(--space-3) var(--space-4);
+  }
+  .sublista a {
+    display: block;
+    padding-block: var(--space-2);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+  }
 
-  .pie { padding: var(--space-6) var(--layout-margin-mobile); }
+  .pie {
+    padding: var(--space-6) var(--layout-margin-mobile);
+  }
 
   /* Mientras el menú está abierto, la página de fondo no scrollea */
-  :global(body:has(dialog[open])) { overflow: hidden; }
+  :global(body:has(dialog[open])) {
+    overflow: hidden;
+  }
 </style>
 
 <script>
   const menu = document.querySelector<HTMLDialogElement>("[data-menu]");
   const abrir = document.querySelector<HTMLButtonElement>("[data-abrir-menu]");
-  const cerrar = document.querySelector<HTMLButtonElement>("[data-cerrar-menu]");
+  const cerrar =
+    document.querySelector<HTMLButtonElement>("[data-cerrar-menu]");
 
   if (menu && abrir && cerrar) {
     abrir.addEventListener("click", () => {
@@ -121,6 +177,10 @@ import Icon from "../ui/Icon.astro";
     });
 
     // Al tocar un enlace (por ejemplo, un ancla del inicio), cerramos el menú
-    menu.querySelectorAll("a").forEach((enlace) => enlace.addEventListener("click", () => menu.close()));
+    menu
+      .querySelectorAll("a")
+      .forEach((enlace) =>
+        enlace.addEventListener("click", () => menu.close()),
+      );
   }
 </script>
