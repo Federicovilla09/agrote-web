@@ -44,3 +44,18 @@ export async function optimizar(
     height: original.height,
   };
 }
+
+
+// Una sola versión de la imagen, a un ancho fijo. Para lugares que no aceptan
+// srcset (como el poster de un <video>): devuelve solo la URL de esa versión.
+export async function optimizarUnica(nombre: string, ancho: number): Promise<string | undefined> {
+  const entrada = Object.entries(archivos).find(([ruta]) => {
+    const archivo = ruta.split("/").pop() ?? "";
+    return archivo.replace(/\.\w+$/, "") === nombre;
+  });
+  if (!entrada) return undefined;
+
+  const original = entrada[1].default;
+  const imagen = await getImage({ src: original, width: Math.min(ancho, original.width), format: "webp" });
+  return imagen.src;
+}

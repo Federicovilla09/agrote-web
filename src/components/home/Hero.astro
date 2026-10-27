@@ -1,6 +1,6 @@
 ---
 // Hero del inicio: video de fondo desde el primer momento, con su primer cuadro como portada.
-import { optimizar } from "../../lib/imagenes";
+import { optimizar, optimizarUnica } from "../../lib/imagenes";
 import { whatsappUrl } from "../../lib/whatsapp";
 import Eyebrow from "../ui/Eyebrow.astro";
 import Button from "../ui/Button.astro";
@@ -9,9 +9,12 @@ import Foto from "../ui/Foto.astro";
 import Tag from "../ui/Tag.astro";
 
 // Portada: el primer cuadro del video (si existe src/assets/images/hero-poster.jpg)
-const poster = await optimizar("hero-poster", [1600]);
+const poster = await optimizarUnica("hero-poster", 960);
 const dron = await optimizar("dron-vuelo", [480]);
 ---
+
+<!-- El poster es lo primero que se ve: le pedimos al navegador que lo baje con prioridad -->
+{poster && <link rel="preload" as="image" href={poster} fetchpriority="high" />}
 
 <section class="hero" data-hero aria-labelledby="hero-titulo">
   <!-- El poster es el primer cuadro del video: no hay salto visual cuando arranca.
@@ -24,7 +27,7 @@ const dron = await optimizar("dron-vuelo", [480]);
     loop
     playsinline
     preload="metadata"
-    poster={poster?.src}
+    poster={poster}
     aria-hidden="true"
   >
     <source src="/video/hero-desktop.mp4" type="video/mp4" media="(min-width: 768px)" />
