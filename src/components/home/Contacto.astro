@@ -4,24 +4,48 @@ import Eyebrow from "../ui/Eyebrow.astro";
 import Button from "../ui/Button.astro";
 import Icon from "../ui/Icon.astro";
 import ContactForm from "./ContactForm";
+import MapaDemo from "./MapaDemo.astro";
 ---
 
-<section id="contacto" class="seccion contacto" aria-labelledby="contacto-titulo">
+<section
+  id="contacto"
+  class="seccion contacto"
+  aria-labelledby="contacto-titulo"
+>
   <div class="container interior">
     <div class="texto">
       <Eyebrow>Contacto</Eyebrow>
-      <h2 id="contacto-titulo" class="text-h1">¿Qué necesitás para tu campo?</h2>
-      <p class="text-body-l bajada">Escribinos por WhatsApp y te responde un asesor, o dejanos tus datos y te llamamos.</p>
-      <Button href={whatsappUrl("Hola, quiero hacer una consulta.")} target="_blank" icon="chat">Escribinos por WhatsApp</Button>
+      <h2 id="contacto-titulo" class="text-h1">
+        ¿Qué necesitás para tu campo?
+      </h2>
+      <p class="text-body-l bajada">
+        Escribinos por WhatsApp y te responde un asesor, o dejanos tus datos y
+        te llamamos.
+      </p>
+      <Button
+        href={whatsappUrl("Hola, quiero hacer una consulta.")}
+        target="_blank"
+        icon="chat">Escribinos por WhatsApp</Button
+      >
 
       <div class="ubicacion">
         <Icon name="ubicacion" />
         <div>
           <p class="nombre">Casa central · Ciudad de demostración</p>
-          <p class="text-body-s bajada">Lun a vie 8 a 12 y 15 a 19 · Sáb 8 a 12</p>
+          <p class="text-body-s bajada">
+            Lun a vie 8 a 12 y 15 a 19 · Sáb 8 a 12
+          </p>
         </div>
       </div>
-      <div class="mapa" aria-hidden="true"><span class="text-data-s">Mapa · se integra más adelante</span></div>
+      <MapaDemo />
+      <Button
+        href={whatsappUrl("Hola, ¿me pasan la ubicación de la casa central?")}
+        target="_blank"
+        variant="link"
+        icon="ubicacion"
+      >
+        Cómo llegar
+      </Button>
     </div>
 
     <!-- Isla de React: el formulario necesita interacción -->
@@ -30,23 +54,35 @@ import ContactForm from "./ContactForm";
 </section>
 
 <style>
-  .contacto { background: var(--color-bg-subtle); }
-  .interior { display: grid; gap: var(--space-10); }
-  .texto { display: grid; gap: var(--space-4); justify-items: start; align-content: start; }
-  .bajada { color: var(--color-text-secondary); }
-  .ubicacion { display: flex; gap: var(--space-3); padding-top: var(--space-2); }
-  .nombre { font-weight: 700; }
-  .mapa {
+  .contacto {
+    background: var(--color-bg-subtle);
+  }
+  .interior {
     display: grid;
-    place-items: end start;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    padding: var(--space-4);
-    border-radius: var(--radius-lg);
-    background: var(--color-placeholder-fill);
+    gap: var(--space-10);
+  }
+  .texto {
+    display: grid;
+    gap: var(--space-4);
+    justify-items: start;
+    align-content: start;
+  }
+  .bajada {
     color: var(--color-text-secondary);
   }
+  .ubicacion {
+    display: flex;
+    gap: var(--space-3);
+    padding-top: var(--space-2);
+  }
+  .nombre {
+    font-weight: 700;
+  }
   @media (min-width: 1024px) {
-    .interior { grid-template-columns: 1fr 1fr; gap: var(--space-16); align-items: start; }
+    .interior {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-16);
+      align-items: start;
+    }
   }
 </style>
