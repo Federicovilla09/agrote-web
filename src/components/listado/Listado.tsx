@@ -166,6 +166,9 @@ export default function Listado({ productos, imagenes }: ListadoProps) {
           </div>
         </div>
 
+        {/* Título oculto: ordena los niveles de títulos (h1 de la página → h2 → h3 de cada tarjeta) */}
+        <h2 className="sr-only">Resultados</h2>
+
         {/* aria-live: el lector de pantalla anuncia los cambios del contador */}
         <p className={styles.contador} aria-live="polite">
           {error ? "" : cargando ? "Buscando equipos…" : `${resultados.length} ${resultados.length === 1 ? "resultado" : "resultados"} · Datos de demostración`}
