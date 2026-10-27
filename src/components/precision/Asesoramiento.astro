@@ -1,0 +1,36 @@
+---
+// Cierre de la página: consulta por WhatsApp o visita al campo.
+import { whatsappUrl } from "../../lib/whatsapp";
+import Eyebrow from "../ui/Eyebrow.astro";
+import Button from "../ui/Button.astro";
+---
+
+<section id="asesoramiento" class="seccion asesoramiento" aria-labelledby="asesoramiento-titulo">
+  <div class="container interior">
+    <div class="texto">
+      <Eyebrow tone="dark">Asesoramiento</Eyebrow>
+      <h2 id="asesoramiento-titulo" class="text-display-l">Pedí asesoramiento técnico</h2>
+      <p class="text-body-l secundario">Un especialista evalúa tu campo y te recomienda la solución adecuada.</p>
+    </div>
+    <div class="acciones">
+      <Button href={whatsappUrl("Hola, quiero asesoramiento técnico sobre agricultura de precisión.")} target="_blank" variant="accent" icon="chat" fullWidth>
+        Escribir por WhatsApp
+      </Button>
+      <Button href={whatsappUrl("Hola, quiero agendar una visita técnica a mi campo.")} target="_blank" variant="light" icon="calendario" fullWidth>
+        Agendar una visita (demo)
+      </Button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .asesoramiento { background: var(--color-bg-media); color: var(--color-text-inverse); }
+  .interior { display: grid; gap: var(--space-8); }
+  .texto { display: grid; gap: var(--space-4); max-width: 40rem; }
+  .secundario { color: var(--color-text-inverse-secondary); }
+  .acciones { display: grid; gap: var(--space-3); }
+
+  @media (min-width: 1024px) {
+    .interior { grid-template-columns: 1fr 340px; align-items: end; gap: var(--space-16); }
+  }
+</style>

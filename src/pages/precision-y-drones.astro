@@ -1,0 +1,32 @@
+---
+// Precisión y drones: página propia para una línea que hoy no tiene lugar en el sitio.
+import SiteLayout from "../layouts/SiteLayout.astro";
+import HeroPrecision from "../components/precision/HeroPrecision.astro";
+import NavInterna from "../components/precision/NavInterna.astro";
+import Drones from "../components/precision/Drones.astro";
+import Demostraciones from "../components/precision/Demostraciones.astro";
+import AgriculturaDigital from "../components/precision/AgriculturaDigital.astro";
+import ComoTrabajamos from "../components/precision/ComoTrabajamos.astro";
+import Asesoramiento from "../components/precision/Asesoramiento.astro";
+---
+
+<SiteLayout
+  title="Precisión y drones"
+  description="Drones de pulverización y mapeo, agricultura digital y asesoramiento técnico. Prototipo conceptual de rediseño."
+>
+  <HeroPrecision />
+  <NavInterna />
+  <Drones />
+  <Demostraciones />
+  <AgriculturaDigital />
+  <ComoTrabajamos />
+  <Asesoramiento />
+</SiteLayout>
+
+<style>
+  /* Al saltar a una sección, deja lugar para el header y la navegación interna */
+  :global(section[id]) { scroll-margin-top: 128px; }
+  @media (min-width: 1024px) {
+    :global(section[id]) { scroll-margin-top: 152px; }
+  }
+</style>

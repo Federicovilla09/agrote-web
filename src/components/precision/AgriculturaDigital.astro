@@ -1,0 +1,92 @@
+---
+// Agricultura digital: herramientas de monitoreo, guiado y gestión.
+// Son categorías genéricas de demostración: validar con la oferta real antes de presentar.
+import { funcionesDigitales } from "../../data/precision";
+import { optimizar } from "../../lib/imagenes";
+import Eyebrow from "../ui/Eyebrow.astro";
+import Icon from "../ui/Icon.astro";
+import Foto from "../ui/Foto.astro";
+
+const imagen = await optimizar("productora-tablet");
+---
+
+<section id="agricultura-digital" class="seccion" aria-labelledby="digital-titulo">
+  <div class="container interior">
+    <div class="texto">
+      <Eyebrow>Agricultura digital</Eyebrow>
+      <h2 id="digital-titulo" class="text-h1">Datos para decidir mejor en cada lote</h2>
+      <p class="text-body-l secundario">Herramientas para monitorear, guiar y gestionar tus equipos.</p>
+    </div>
+
+    <div class="imagen">
+      <Foto imagen={imagen} alt="Productora revisando datos del lote en una tablet" ratio="4 / 3" sizes="(min-width: 1024px) 560px, 100vw" class="foto" />
+    </div>
+
+    <div class="funciones">
+      <ul>
+        {funcionesDigitales.map((f) => (
+          <li>
+            <span class="icono"><Icon name={f.icono} size={22} /></span>
+            <div>
+              <p class="titulo">{f.titulo}</p>
+              <p class="text-body-s secundario">{f.texto}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <p class="text-data-s secundario">Soluciones de demostración: validar con la oferta real.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Mobile: texto, foto y funciones, uno debajo del otro */
+  .interior {
+    display: grid;
+    gap: var(--space-8);
+    grid-template-areas: "texto" "imagen" "funciones";
+  }
+  .texto { grid-area: texto; display: grid; gap: var(--space-4); }
+  .imagen { grid-area: imagen; }
+  .imagen :global(.foto) { border-radius: var(--radius-lg); }
+  .funciones { grid-area: funciones; display: grid; gap: var(--space-4); }
+  .secundario { color: var(--color-text-secondary); }
+
+  ul { display: grid; gap: var(--space-3); padding: 0; list-style: none; }
+  li {
+    display: flex;
+    gap: var(--space-4);
+    align-items: flex-start;
+    padding: var(--space-4);
+    border-radius: var(--radius-lg);
+    background: var(--color-bg-subtle);
+  }
+  .icono {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-full);
+    background: var(--color-bg-brand-subtle);
+    color: var(--color-text-brand);
+  }
+  .titulo { font-weight: 700; }
+
+  /* Desktop: la foto a la izquierda ocupando las dos filas; texto y funciones a la derecha */
+  @media (min-width: 1024px) {
+    .interior {
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas:
+        "imagen texto"
+        "imagen funciones";
+      column-gap: var(--space-20);
+      row-gap: var(--space-6);
+      align-items: start;
+    }
+    .imagen { align-self: center; }
+    .imagen :global(.foto) { aspect-ratio: 1 / 1 !important; border-radius: var(--radius-xl); }
+    .texto { align-self: end; }
+    li { padding: var(--space-5); }
+  }
+</style>

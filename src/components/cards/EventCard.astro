@@ -4,7 +4,9 @@ import type { Evento } from "../../data/tipos";
 import { whatsappUrl } from "../../lib/whatsapp";
 import Button from "../ui/Button.astro";
 
-interface Props { evento: Evento }
+interface Props {
+  evento: Evento;
+}
 const { evento } = Astro.props;
 const mensaje = `Hola, quiero reservar lugar para "${evento.titulo}" del ${evento.dia} de ${evento.mes.toLowerCase()}.`;
 ---
@@ -18,7 +20,12 @@ const mensaje = `Hola, quiero reservar lugar para "${evento.titulo}" del ${event
     <h3 class="text-h3">{evento.titulo}</h3>
     <p class="text-body-s secundario">{evento.lugar}</p>
     <p class="text-data-s secundario">Evento de demostración</p>
-    <Button href={whatsappUrl(mensaje)} target="_blank" variant="secondary" size="sm">Reservar lugar</Button>
+    <Button
+      href={whatsappUrl(mensaje)}
+      target="_blank"
+      variant="secondary"
+      size="sm">Reservar lugar</Button
+    >
   </div>
 </article>
 
@@ -36,12 +43,21 @@ const mensaje = `Hola, quiero reservar lugar para "${evento.titulo}" del ${event
     display: grid;
     justify-items: center;
     flex-shrink: 0;
+    min-width: 64px;
     padding: var(--space-2) var(--space-3);
     border-radius: var(--radius-sm);
     background: var(--color-bg-inverse);
     color: var(--color-text-inverse);
   }
-  .fecha .text-data-s { color: var(--color-text-inverse-secondary); }
-  .info { display: grid; justify-items: start; gap: var(--space-2); }
-  .secundario { color: var(--color-text-secondary); }
+  .fecha .text-data-s {
+    color: var(--color-text-inverse-secondary);
+  }
+  .info {
+    display: grid;
+    justify-items: start;
+    gap: var(--space-2);
+  }
+  .secundario {
+    color: var(--color-text-secondary);
+  }
 </style>

@@ -1,0 +1,65 @@
+---
+// Sección Drones: beneficios y tarjetas de modelos (con el dato dominante arriba).
+import { drones } from "../../data";
+import { beneficiosDrones } from "../../data/precision";
+import Eyebrow from "../ui/Eyebrow.astro";
+import Icon from "../ui/Icon.astro";
+import Carrusel from "../ui/Carrusel.astro";
+import DroneCard from "../cards/DroneCard.astro";
+---
+
+<section id="drones" class="seccion" aria-labelledby="drones-titulo">
+  <div class="container interior">
+    <div class="intro">
+      <div class="texto">
+        <Eyebrow>Drones</Eyebrow>
+        <h2 id="drones-titulo" class="text-h1">Pulverización y mapeo desde el aire</h2>
+        <p class="text-body-l secundario">
+          Aplicaciones precisas, relevamiento de lotes y acceso a zonas donde no entra un equipo terrestre.
+        </p>
+      </div>
+
+      <ul class="beneficios">
+        {beneficiosDrones.map((b) => (
+          <li>
+            <span class="icono"><Icon name={b.icono} size={22} /></span>
+            <div>
+              <p class="beneficio">{b.titulo}</p>
+              <p class="text-body-s secundario">{b.texto}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <Carrusel label="Modelos de drones" columnas={3}>
+      {drones.map((dron) => <DroneCard dron={dron} />)}
+    </Carrusel>
+  </div>
+</section>
+
+<style>
+  .interior { display: grid; gap: var(--space-10); }
+  .intro { display: grid; gap: var(--space-8); }
+  .texto { display: grid; gap: var(--space-4); }
+  .secundario { color: var(--color-text-secondary); }
+
+  .beneficios { display: grid; gap: var(--space-5); padding: 0; list-style: none; }
+  .beneficios li { display: flex; gap: var(--space-4); align-items: flex-start; }
+  .icono {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-full);
+    background: var(--color-bg-brand-subtle);
+    color: var(--color-text-brand);
+  }
+  .beneficio { font-weight: 700; }
+
+  @media (min-width: 1024px) {
+    .interior { gap: var(--space-16); }
+    .intro { grid-template-columns: 1.1fr 1fr; gap: var(--space-20); align-items: end; }
+  }
+</style>

@@ -1,0 +1,80 @@
+---
+// Hero de la página de precisión: más bajo que el del inicio y sin video.
+// El título va sobre fondo liso para garantizar contraste (no dentro de la foto).
+import { optimizar } from "../../lib/imagenes";
+import { whatsappUrl } from "../../lib/whatsapp";
+import Eyebrow from "../ui/Eyebrow.astro";
+import Button from "../ui/Button.astro";
+import Foto from "../ui/Foto.astro";
+
+const imagen = await optimizar("dron-datos", [480, 960, 1600]);
+---
+
+<section class="hero" aria-labelledby="precision-titulo">
+  <div class="container interior">
+    <div class="texto">
+      <Eyebrow tone="dark">Precisión y drones</Eyebrow>
+      <h1 id="precision-titulo" class="text-display-l titulo">Tecnología que trabaja cada hectárea</h1>
+      <p class="text-body-l bajada">
+        Drones, agricultura digital y asesoramiento para aplicar mejor, medir más y decidir con datos.
+      </p>
+      <div class="acciones">
+        <Button href={whatsappUrl("Hola, quiero asesoramiento sobre agricultura de precisión.")} target="_blank" variant="accent" icon="chat">
+          Pedir asesoramiento
+        </Button>
+        <Button href="#demostraciones" variant="light" icon="calendario">Pedí una demostración</Button>
+      </div>
+    </div>
+
+    <div class="imagen">
+      <Foto imagen={imagen} alt="Dron agrícola sobrevolando un cultivo con datos superpuestos" ratio="1 / 1" sizes="(min-width: 1024px) 520px, 100vw" priority class="foto" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero { background: var(--color-bg-media); color: var(--color-text-inverse); }
+  .interior { display: grid; gap: var(--space-8); padding-block: var(--space-8) var(--space-12); }
+
+  /* En mobile la foto va arriba, de borde a borde, y se funde con el fondo */
+  .imagen {
+    position: relative;
+    order: -1;
+    margin-inline: calc(var(--layout-margin-mobile) * -1);
+    margin-top: calc(var(--space-8) * -1);
+  }
+  .imagen::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 55%, var(--color-bg-media));
+  }
+  .imagen :global(.foto) { aspect-ratio: 4 / 5 !important; }
+
+  .texto { display: grid; gap: var(--space-4); }
+
+  /* Cortes como en Figma ("Tecnología que / trabaja cada / hectárea").
+     Llenamos cada línea (wrap, en lugar del balance general de los títulos)
+     y limitamos el ancho a 7em, para que "trabaja cada hectárea" nunca
+     entre en una sola línea, ni en celulares anchos. */
+  .titulo { max-width: 7em; text-wrap: wrap; }
+  .bajada { color: var(--color-text-inverse-secondary); max-width: 36rem; }
+  .acciones { display: grid; gap: var(--space-3); padding-top: var(--space-2); }
+
+  @media (min-width: 768px) {
+    .acciones { display: flex; flex-wrap: wrap; }
+    .imagen { margin-inline: calc(var(--layout-margin-tablet) * -1); }
+  }
+
+  @media (min-width: 1024px) {
+    .interior { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); align-items: center; gap: var(--space-16); padding-block: var(--space-20); }
+    .imagen { order: 0; margin: 0; }
+    .imagen::after { display: none; }
+    .imagen :global(.foto) { aspect-ratio: 1 / 1 !important; border-radius: var(--radius-xl); }
+  }
+
+  /* Display XL recién en pantallas anchas (1440 px, el ancho del diseño): antes la columna es angosta */
+  @media (min-width: 1440px) {
+    .titulo { font-size: var(--text-display-xl); line-height: var(--text-display-xl-lh); }
+  }
+</style>

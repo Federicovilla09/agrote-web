@@ -1,0 +1,61 @@
+---
+// Demostraciones: charlas técnicas y vuelos en vivo, como los que la empresa comunica en redes.
+import { eventos } from "../../data";
+import { whatsappUrl } from "../../lib/whatsapp";
+import Eyebrow from "../ui/Eyebrow.astro";
+import Button from "../ui/Button.astro";
+import EventCard from "../cards/EventCard.astro";
+---
+
+<section id="demostraciones" class="seccion demostraciones" aria-labelledby="demos-titulo">
+  <div class="container interior">
+    <div class="texto">
+      <Eyebrow>Demostraciones</Eyebrow>
+      <h2 id="demos-titulo" class="text-h1">Vení a ver un dron en acción</h2>
+      <p class="text-body-l secundario">
+        Charlas técnicas y vuelos en vivo en la región. Reservá tu lugar o pedí una demostración en tu campo.
+      </p>
+    </div>
+
+    <ul class="eventos">
+      {eventos.map((evento) => <li><EventCard evento={evento} /></li>)}
+    </ul>
+
+    <div class="cta">
+      <Button href={whatsappUrl("Hola, quiero pedir una demostración de drones en mi campo.")} target="_blank" icon="calendario" fullWidth>
+        Pedí una demostración en tu campo
+      </Button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .demostraciones { background: var(--color-bg-subtle); }
+
+  /* Mobile: texto, eventos y el botón al final */
+  .interior {
+    display: grid;
+    gap: var(--space-8);
+    grid-template-areas:
+      "texto"
+      "eventos"
+      "cta";
+  }
+  .texto { grid-area: texto; display: grid; gap: var(--space-4); max-width: 40rem; }
+  .eventos { grid-area: eventos; display: grid; gap: var(--space-3); padding: 0; list-style: none; }
+  .eventos li { display: grid; }
+  .cta { grid-area: cta; }
+  .secundario { color: var(--color-text-secondary); }
+
+  /* Desktop: el botón sube a la derecha del texto, los eventos abajo en dos columnas */
+  @media (min-width: 1024px) {
+    .interior {
+      grid-template-columns: 1fr auto;
+      grid-template-areas:
+        "texto   cta"
+        "eventos eventos";
+      align-items: end;
+    }
+    .eventos { grid-template-columns: 1fr 1fr; gap: var(--space-6); }
+  }
+</style>

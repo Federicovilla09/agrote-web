@@ -44,10 +44,10 @@ import Icon from "../ui/Icon.astro";
     pointer-events: none;
   }
 
+  /* En desktop el "Consultar" del header siempre está a la vista: el flotante sobra */
   @media (min-width: 1024px) {
     .fab {
-      right: var(--space-10);
-      bottom: var(--space-10);
+      display: none;
     }
   }
 </style>

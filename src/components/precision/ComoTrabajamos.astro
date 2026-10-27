@@ -1,0 +1,61 @@
+---
+// Cómo trabajamos: comunica la oferta propia (asesoramiento y acompañamiento),
+// en lugar de describir la tecnología del fabricante.
+import { pasosTrabajo } from "../../data/precision";
+import Eyebrow from "../ui/Eyebrow.astro";
+---
+
+<section id="como-trabajamos" class="seccion como" aria-labelledby="como-titulo">
+  <div class="container interior">
+    <div class="texto">
+      <Eyebrow>Cómo trabajamos</Eyebrow>
+      <h2 id="como-titulo" class="text-h1">Te acompañamos de la elección a la campaña</h2>
+    </div>
+
+    <!-- <ol>: una lista ordenada, porque los pasos tienen un orden -->
+    <ol class="pasos">
+      {pasosTrabajo.map((paso, i) => (
+        <li class="paso">
+          <span class="numero" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+          <div class="contenido">
+            <h3 class="text-h3">{paso.titulo}</h3>
+            <p class="text-body-s secundario">{paso.texto}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .como { background: var(--color-bg-brand-subtle); }
+  .interior { display: grid; gap: var(--space-8); }
+  .texto { display: grid; gap: var(--space-4); max-width: 40rem; }
+  .secundario { color: var(--color-text-secondary); }
+
+  .pasos { display: grid; gap: var(--space-6); padding: 0; list-style: none; }
+  .paso { display: flex; gap: var(--space-4); align-items: flex-start; }
+  .numero {
+    font-family: var(--font-display);
+    font-size: var(--text-display-l);
+    line-height: 0.9;
+    font-weight: 800;
+    color: var(--color-text-brand);
+  }
+  .contenido { display: grid; gap: var(--space-1); padding-top: var(--space-2); }
+
+  /* Desktop: los cuatro pasos en fila, unidos por una línea */
+  @media (min-width: 1024px) {
+    .interior { gap: var(--space-12); }
+    .pasos { grid-template-columns: repeat(4, 1fr); gap: var(--space-6); }
+    .paso { flex-direction: column; gap: var(--space-3); }
+    .numero { display: flex; align-items: center; gap: var(--space-3); width: 100%; }
+    .numero::after {
+      content: "";
+      flex: 1;
+      height: 2px;
+      background: var(--color-border-strong);
+    }
+    .paso:last-child .numero::after { display: none; }
+  }
+</style>
