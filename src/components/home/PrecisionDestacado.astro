@@ -12,27 +12,31 @@ const datos = [["40 L", "Tanque"], ["20 ha/h", "Rendimiento"], ["Demo", "Ejemplo
   <div class="container interior">
     <Foto imagen={imagen} alt="Dron pulverizando un cultivo" ratio="5 / 4" sizes="(min-width: 1024px) 600px, 100vw" class="foto" />
     <div class="texto">
-      <Eyebrow>Agricultura de precisión</Eyebrow>
-      <h2 id="precision-titulo" class="text-h1">Precisión que se nota en cada hectárea</h2>
-      <p class="text-body-l bajada">Drones de pulverización y mapeo, con asesoramiento para implementarlos en tu campo.</p>
+      <div class="encabezado">
+        <Eyebrow>Agricultura de precisión</Eyebrow>
+        <h2 id="precision-titulo" class="text-h1">Precisión que se nota en cada hectárea</h2>
+        <p class="text-body-l bajada">Drones de pulverización y mapeo, con asesoramiento para implementarlos en tu campo.</p>
+      </div>
       <ul class="chips">
         <li>Pulverización</li><li>Mapeo</li><li>Monitoreo</li>
       </ul>
       <dl class="datos">
         {datos.map(([valor, label]) => (
-          <div><dt class="text-data-s">{label}</dt><dd class="text-h2">{valor}</dd></div>
+          <div><dt class="text-data-s">{label}</dt><dd>{valor}</dd></div>
         ))}
       </dl>
-      <Button href="/precision-y-drones" icon="flecha-derecha">Conocer soluciones</Button>
+      <Button href="/precision-y-drones" icon="flecha-derecha" class="cta">Conocer soluciones</Button>
     </div>
   </div>
 </section>
 
 <style>
   .precision { background: var(--color-bg-brand-subtle); }
-  .interior { display: grid; gap: var(--space-8); align-items: center; }
+  .interior { display: grid; gap: var(--space-5); align-items: center; }
   .interior :global(.foto) { border-radius: var(--radius-xl); }
-  .texto { display: grid; gap: var(--space-4); justify-items: start; }
+  /* Bloques separados por 20 px; dentro del encabezado, 12 px (como en Figma) */
+  .texto { display: grid; gap: var(--space-5); }
+  .encabezado { display: grid; gap: var(--space-3); }
   .bajada { color: var(--color-text-secondary); }
 
   .chips { display: flex; flex-wrap: wrap; gap: var(--space-2); padding: 0; list-style: none; }
@@ -45,10 +49,20 @@ const datos = [["40 L", "Tanque"], ["20 ha/h", "Rendimiento"], ["Demo", "Ejemplo
   }
 
   .datos { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3); width: 100%; }
-  .datos div { display: flex; flex-direction: column-reverse; gap: var(--space-1); padding: var(--space-4); border-radius: var(--radius-md); background: var(--color-bg-page); }
+  .datos div { display: flex; flex-direction: column-reverse; gap: var(--space-1); padding: var(--space-3); border-radius: var(--radius-md); background: var(--color-bg-page); }
   .datos dt { color: var(--color-text-secondary); }
+  /* Mobile: el valor es un dato técnico (Data L, IBM Plex Mono), como en Figma */
+  .datos dd { font-family: var(--font-mono); font-size: var(--text-data-l); line-height: var(--text-data-l-lh); font-weight: 500; white-space: nowrap; }
+
+  /* Mobile: botón a todo el ancho */
+  .texto :global(.cta) { width: 100%; }
 
   @media (min-width: 1024px) {
     .interior { grid-template-columns: 1fr 1fr; gap: var(--space-20); }
+    .texto { justify-items: start; }
+    .datos div { padding: var(--space-4); }
+    /* Desktop: el valor pasa a Heading H2 */
+    .datos dd { font-family: var(--font-display); font-size: var(--text-heading-h2); line-height: var(--text-heading-h2-lh); font-weight: 800; }
+    .texto :global(.cta) { width: auto; }
   }
 </style>
