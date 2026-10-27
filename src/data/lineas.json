@@ -1,6 +1,6 @@
 [
   { "id": "agricola", "titulo": "Maquinaria agrícola", "descripcion": "Tractores, cosechadoras, pulverizadores", "icono": "tractor", "imagen": "tractor-pulverizando", "href": "/nuevos/tractores" },
-  { "id": "construccion", "titulo": "Construcción", "descripcion": "Minicargadoras, pala retro, excavadoras", "icono": "construccion", "imagen": "cargadora-frontal", "href": "/nuevos/tractores" },
+  { "id": "construccion", "titulo": "Construcción", "descripcion": "Minicargadoras, pala retro, excavadoras", "icono": "construccion", "imagen": "cargadora-frontal", "href": "/nuevos/tractores", "disponible": false },
   { "id": "usados", "titulo": "Usados", "descripcion": "Unidades revisadas con ficha completa", "icono": "etiqueta", "imagen": "pulverizador-autopropulsado", "href": "/nuevos/tractores" },
   { "id": "precision", "titulo": "Precisión y drones", "descripcion": "Pulverización, mapeo y monitoreo", "icono": "dron", "imagen": "dron-vuelo", "href": "/precision-y-drones" },
   { "id": "posventa", "titulo": "Posventa", "descripcion": "Servicio técnico y repuestos", "icono": "llave", "imagen": "tecnico-taller", "href": "/#posventa" }

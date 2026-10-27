@@ -1,16 +1,15 @@
 ---
-// Página de trabajo: muestra los componentes del sistema para revisarlos.
-// No forma parte del sitio final (no tiene enlaces desde el menú).
-import BaseLayout from "../layouts/BaseLayout.astro";
-import Button from "../components/ui/Button.astro";
-import Icon from "../components/ui/Icon.astro";
-import { icons, type IconName } from "../components/ui/icons";
-import Tag from "../components/ui/Tag.astro";
-import DemoControles from "../components/dev/DemoControles";
-import DemoEstados from "../components/dev/DemoEstados";
-import Accordion from "../components/ui/Accordion.astro";
-import SpecList from "../components/ui/SpecList.astro";
-import Breadcrumb from "../components/ui/Breadcrumb.astro";
+// Página de trabajo: banco de pruebas del sistema de diseño (solo en desarrollo).
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Button from "../ui/Button.astro";
+import Icon from "../ui/Icon.astro";
+import { icons, type IconName } from "../ui/icons";
+import Tag from "../ui/Tag.astro";
+import DemoControles from "./DemoControles";
+import DemoEstados from "./DemoEstados";
+import Accordion from "../ui/Accordion.astro";
+import SpecList from "../ui/SpecList.astro";
+import Breadcrumb from "../ui/Breadcrumb.astro";
 
 const variants = ["primary", "secondary", "accent", "light", "link"] as const;
 const iconNames = Object.keys(icons) as IconName[];

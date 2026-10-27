@@ -5,21 +5,44 @@ import type { LineaNegocio } from "../../data/tipos";
 import { optimizar } from "../../lib/imagenes";
 import Foto from "../ui/Foto.astro";
 import Icon from "../ui/Icon.astro";
+import Tag from "../ui/Tag.astro";
 
-interface Props { linea: LineaNegocio }
+interface Props {
+  linea: LineaNegocio;
+}
 const { linea } = Astro.props;
 const imagen = await optimizar(linea.imagen, [480, 960]);
+// Sin página todavía: la tarjeta se ve igual, pero no es un enlace
+const disponible = linea.disponible !== false;
+const Elemento = disponible ? "a" : "div";
 ---
 
-<a class="card" href={linea.href}>
+<Elemento
+  class:list={["card", { "no-disponible": !disponible }]}
+  href={disponible ? linea.href : undefined}
+  aria-disabled={disponible ? undefined : "true"}
+>
   <Foto imagen={imagen} alt="" ratio="4 / 5" sizes="227px" class="foto" />
   <span class="icono"><Icon name={linea.icono} /></span>
   <span class="texto">
     <span class="titulo">{linea.titulo}</span>
     <span class="descripcion">{linea.descripcion}</span>
+    {
+      !disponible && (
+        <span class="pronto">
+          <Tag tone="neutral">Próximamente</Tag>
+        </span>
+      )
+    }
   </span>
-  <span class="flecha"><Icon name="chevron-derecha" size={20} /></span>
-</a>
+  {
+    disponible && (
+      <span class="flecha">
+        <Icon name="chevron-derecha" size={20} />
+      </span>
+    )
+  }
+</Elemento>
 
 <style>
   .card {
@@ -34,11 +57,24 @@ const imagen = await optimizar(linea.imagen, [480, 960]);
     transition: background-color 150ms;
   }
   @media (hover: hover) {
-    .card:hover { background: var(--color-neutral-800); }
+    .card:hover {
+      background: var(--color-neutral-800);
+    }
+  }
+
+  /* Sin página todavía: mantiene el hover, pero el cursor indica que no se puede abrir */
+  .no-disponible {
+    cursor: default;
+  }
+  .pronto {
+    display: block;
+    margin-top: var(--space-1);
   }
 
   /* Mobile: sin foto, con ícono */
-  .card :global(.foto) { display: none; }
+  .card :global(.foto) {
+    display: none;
+  }
   .icono {
     display: grid;
     place-items: center;
@@ -48,16 +84,43 @@ const imagen = await optimizar(linea.imagen, [480, 960]);
     border-radius: var(--radius-full);
     background: var(--color-bg-media);
   }
-  .texto { display: grid; gap: var(--space-1); flex: 1; }
-  .titulo { font-weight: 700; }
-  .descripcion { font-size: var(--text-body-s); line-height: var(--text-body-s-lh); color: var(--color-text-inverse-secondary); }
+  .texto {
+    display: grid;
+    gap: var(--space-1);
+    flex: 1;
+    align-content: start;
+  }
+  .titulo {
+    font-weight: 700;
+  }
+  .descripcion {
+    font-size: var(--text-body-s);
+    line-height: var(--text-body-s-lh);
+    color: var(--color-text-inverse-secondary);
+  }
 
   /* Desktop: tarjeta vertical con foto */
   @media (min-width: 1024px) {
-    .card { flex-direction: column; align-items: stretch; gap: var(--space-3); }
-    .card :global(.foto) { display: block; border-radius: var(--radius-sm); }
-    .icono { display: none; }
-    .titulo { font-family: var(--font-display); font-size: var(--text-heading-h3); line-height: var(--text-heading-h3-lh); font-weight: 800; }
-    .flecha { display: none; }
+    .card {
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--space-3);
+    }
+    .card :global(.foto) {
+      display: block;
+      border-radius: var(--radius-sm);
+    }
+    .icono {
+      display: none;
+    }
+    .titulo {
+      font-family: var(--font-display);
+      font-size: var(--text-heading-h3);
+      line-height: var(--text-heading-h3-lh);
+      font-weight: 800;
+    }
+    .flecha {
+      display: none;
+    }
   }
 </style>

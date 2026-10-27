@@ -45,7 +45,14 @@ const consultar = whatsappUrl("Hola, quiero hacer una consulta.");
                   <ul>
                     {item.hijos.map((hijo) => (
                       <li>
-                        <a href={hijo.href}>{hijo.label}</a>
+                        {hijo.disponible === false ? (
+                          <span class="no-disponible" aria-disabled="true">
+                            {hijo.label}{" "}
+                            <span class="pronto">Próximamente</span>
+                          </span>
+                        ) : (
+                          <a href={hijo.href}>{hijo.label}</a>
+                        )}
                       </li>
                     ))}
                   </ul>
@@ -220,6 +227,17 @@ const consultar = whatsappUrl("Hola, quiero hacer una consulta.");
     .submenu ul a:hover {
       background: var(--color-bg-hover);
     }
+        /* Opción sin página todavía: visible pero deshabilitada */
+    .submenu .no-disponible {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+      padding: var(--space-2) var(--space-3);
+      color: var(--color-action-on-disabled);
+      cursor: default;
+    }
+    .pronto { font-family: var(--font-mono); font-size: var(--text-data-eyebrow); text-transform: uppercase; letter-spacing: 0.06em; }
   }
 </style>
 

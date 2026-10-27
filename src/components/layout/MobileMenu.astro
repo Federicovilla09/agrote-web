@@ -29,7 +29,13 @@ import Icon from "../ui/Icon.astro";
                 <ul class="sublista">
                   {item.hijos.map((hijo) => (
                     <li>
-                      <a href={hijo.href}>{hijo.label}</a>
+                      {hijo.disponible === false ? (
+                        <span class="no-disponible" aria-disabled="true">
+                          {hijo.label} <span class="pronto">Próximamente</span>
+                        </span>
+                      ) : (
+                        <a href={hijo.href}>{hijo.label}</a>
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -145,6 +151,19 @@ import Icon from "../ui/Icon.astro";
     padding-block: var(--space-2);
     color: var(--color-text-secondary);
     text-decoration: none;
+  }
+  .sublista .no-disponible {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding-block: var(--space-2);
+    color: var(--color-action-on-disabled);
+  }
+  .pronto {
+    font-family: var(--font-mono);
+    font-size: var(--text-data-eyebrow);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
   }
 
   .pie {

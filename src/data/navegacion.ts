@@ -2,7 +2,7 @@
 export interface ItemMenu {
   label: string;
   href: string;
-  hijos?: { label: string; href: string }[];
+  hijos?: { label: string; href: string; disponible?: boolean }[];
 }
 
 export const menuPrincipal: ItemMenu[] = [
@@ -11,8 +11,8 @@ export const menuPrincipal: ItemMenu[] = [
     href: "/nuevos/tractores",
     hijos: [
       { label: "Agrícola", href: "/nuevos/tractores" },
-      { label: "Construcción", href: "/nuevos/tractores" },
-      { label: "Implementos", href: "/nuevos/tractores" },
+      { label: "Construcción", href: "/nuevos/tractores", disponible: false },
+      { label: "Implementos", href: "/nuevos/tractores", disponible: false },
     ],
   },
   { label: "Usados", href: "/nuevos/tractores?condicion=usado" },

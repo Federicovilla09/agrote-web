@@ -1,0 +1,16 @@
+---
+// Páginas de trabajo (/sistema y /tarjetas): existen solo en desarrollo.
+// Con "npm run dev" se generan; al construir el sitio para publicar, no.
+import SistemaPagina from "../components/dev/SistemaPagina.astro";
+import TarjetasPagina from "../components/dev/TarjetasPagina.astro";
+
+export function getStaticPaths() {
+  // import.meta.env.PROD es true al construir para publicar (npm run build)
+  if (import.meta.env.PROD) return [];
+  return [{ params: { herramienta: "sistema" } }, { params: { herramienta: "tarjetas" } }];
+}
+
+const { herramienta } = Astro.params;
+---
+
+{herramienta === "sistema" ? <SistemaPagina /> : <TarjetasPagina />}

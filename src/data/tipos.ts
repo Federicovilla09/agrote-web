@@ -2,19 +2,19 @@
 import type { IconName } from "../components/ui/icons";
 
 export interface Producto {
-  slug: string;              // identificador para la URL: /equipos/tractor-85-hp
+  slug: string; // identificador para la URL: /equipos/tractor-85-hp
   modelo: string;
   categoria: "Tractor" | "Cosechadora" | "Pulverizador" | "Construcción";
   linea: "agricola" | "construccion";
   condicion: "nuevo" | "usado";
   potenciaHp: number;
-  traccion?: "4x4" | "4x2";  // solo tractores
-  resumen: string;           // los datos clave de la tarjeta
+  traccion?: "4x4" | "4x2"; // solo tractores
+  resumen: string; // los datos clave de la tarjeta
   descripcion: string;
-  imagen?: string;           // nombre del archivo en src/assets/images, sin extensión
+  imagen?: string; // nombre del archivo en src/assets/images, sin extensión
   destacado?: boolean;
-  anio?: number;             // solo usados
-  horas?: number;            // solo usados
+  anio?: number; // solo usados
+  horas?: number; // solo usados
 }
 
 export interface Oferta {
@@ -48,6 +48,7 @@ export interface LineaNegocio {
   icono: IconName;
   imagen?: string;
   href: string;
+  disponible?: boolean; // false → tarjeta con "Próximamente", sin enlace
 }
 
 export interface Evento {

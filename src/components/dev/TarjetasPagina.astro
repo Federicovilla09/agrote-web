@@ -1,14 +1,14 @@
 ---
-// Página de trabajo: todas las tarjetas con los datos de demostración.
-import BaseLayout from "../layouts/BaseLayout.astro";
-import ProductCard from "../components/cards/ProductCard";
-import OfferCard from "../components/cards/OfferCard.astro";
-import DroneCard from "../components/cards/DroneCard.astro";
-import DeliveryCard from "../components/cards/DeliveryCard.astro";
-import BusinessLineCard from "../components/cards/BusinessLineCard.astro";
-import EventCard from "../components/cards/EventCard.astro";
-import { tractoresNuevos, usadosDestacados, ofertas, drones, entregas, lineas, eventos } from "../data";
-import { optimizar } from "../lib/imagenes";
+// Página de trabajo: todas las tarjetas con los datos de demostración (solo en desarrollo).
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProductCard from "../cards/ProductCard";
+import OfferCard from "../cards/OfferCard.astro";
+import DroneCard from "../cards/DroneCard.astro";
+import DeliveryCard from "../cards/DeliveryCard.astro";
+import BusinessLineCard from "../cards/BusinessLineCard.astro";
+import EventCard from "../cards/EventCard.astro";
+import { tractoresNuevos, usadosDestacados, ofertas, drones, entregas, lineas, eventos } from "../../data";
+import { optimizar } from "../../lib/imagenes";
 
 // Las imágenes de las tarjetas de producto se preparan acá (en el servidor)
 // y se pasan como props, porque ProductCard es React y no puede optimizarlas sola.
