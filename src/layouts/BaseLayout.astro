@@ -11,12 +11,20 @@ import fuenteTexto from "@fontsource/atkinson-hyperlegible/files/atkinson-hyperl
 interface Props {
   title: string;
   description?: string;
+  /** Imagen para la vista previa al compartir (ruta dentro de public/) */
+  image?: string;
 }
 
 const {
   title,
   description = "Maquinaria, tecnología y posventa para el campo. Prototipo conceptual de rediseño.",
+  image = "/og-image.jpg",
 } = Astro.props;
+
+// Las redes necesitan direcciones completas (con https://), no rutas relativas
+const urlPagina = new URL(Astro.url.pathname, Astro.site);
+const urlImagen = new URL(image, Astro.site);
+const tituloCompleto = `${title} · AgroTe`;
 ---
 
 <!doctype html>
@@ -45,7 +53,24 @@ const {
     />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#0E2350" />
-    <title>{`${title} · AgroTe`}</title>
+        <title>{tituloCompleto}</title>
+    <link rel="canonical" href={urlPagina} />
+
+    <!-- Vista previa al compartir el link (WhatsApp, LinkedIn, Facebook, X) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="AgroTe" />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:title" content={tituloCompleto} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={urlPagina} />
+    <meta property="og:image" content={urlImagen} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="AgroTe · Desde el tractor hasta el dron" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={tituloCompleto} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={urlImagen} />
   </head>
   <body>
     <slot />
