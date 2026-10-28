@@ -8,7 +8,8 @@ import Icon from "../ui/Icon.astro";
 import Foto from "../ui/Foto.astro";
 import Tag from "../ui/Tag.astro";
 
-// Portada: el primer cuadro del video (si existe src/assets/images/hero-poster.jpg)
+// Portada: el primer cuadro del video (si existe src/assets/images/hero-poster.jpg).
+// Una sola versión de 960 px: el poster no acepta srcset y solo se ve hasta que arranca el video.
 const poster = await optimizarUnica("hero-poster", 960);
 const dron = await optimizar("dron-vuelo", [480]);
 ---
@@ -38,7 +39,10 @@ const dron = await optimizar("dron-vuelo", [480]);
   <div class="container contenido">
     <div class="principal">
       <Eyebrow tone="dark">Concesionaria agrícola · Litoral</Eyebrow>
-      <h1 id="hero-titulo" class="text-display-xl">Del tractor al dron</h1>
+      <h1 id="hero-titulo" class="text-display-xl titulo">
+        <span class="linea">Desde el tractor</span>
+        <span class="linea">hasta el dron</span>
+      </h1>
       <p class="text-body-l bajada">
         Equipamos tu campo y te acompañamos después: maquinaria nueva y usada, tecnología de precisión y posventa.
       </p>
@@ -105,6 +109,13 @@ const dron = await optimizar("dron-vuelo", [480]);
   .contenido { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-8); }
   .principal { display: grid; gap: var(--space-4); max-width: 44rem; }
   .bajada { color: var(--color-text-inverse-secondary); max-width: 36rem; }
+
+  /* Título en dos frases fijas: "Desde el tractor" / "hasta el dron".
+     Cada frase ocupa una línea y el tamaño se ajusta para que "Desde el tractor"
+     (unos 5,8 em) siempre entre en el ancho disponible, sin pasar de Display XL. */
+  .titulo .linea { display: block; white-space: nowrap; }
+  .titulo { font-size: min(var(--text-display-xl), calc((100vw - 2 * var(--layout-margin-mobile)) / 5.9)); }
+
   .acciones { display: grid; gap: var(--space-3); padding-top: var(--space-2); }
 
   .destacada { display: none; }
@@ -146,9 +157,12 @@ const dron = await optimizar("dron-vuelo", [480]);
 
   @media (min-width: 768px) {
     .acciones { display: flex; flex-wrap: wrap; }
+    .titulo { font-size: min(var(--text-display-xl), calc((100vw - 2 * var(--layout-margin-tablet)) / 5.9)); }
   }
 
   @media (min-width: 1024px) {
+    /* Columna de texto = contenedor − tarjeta destacada (300 px) − separación (32 px) */
+    .titulo { font-size: min(var(--text-display-xl), calc((min(1200px, 100vw - 240px) - 332px) / 5.9)); }
     .degradado {
       background:
         linear-gradient(to bottom, rgb(12 16 24 / 0.5), transparent 25%),
