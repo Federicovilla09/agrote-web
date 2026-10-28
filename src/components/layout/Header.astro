@@ -1,7 +1,7 @@
 ---
 // Header del sitio.
 // variant="solid": fondo blanco, fijo arriba al hacer scroll.
-// variant="overlay": transparente sobre el hero; pasa a sólido al salir del hero.
+// variant="overlay": transparente sobre el hero; pasa a sólido apenas se hace scroll.
 // En mobile se esconde al bajar y reaparece al subir.
 import { menuPrincipal } from "../../data/navegacion";
 import { whatsappUrl } from "../../lib/whatsapp";
@@ -114,7 +114,7 @@ const consultar = whatsappUrl("Hola, quiero hacer una consulta.");
     color: var(--color-text-inverse);
     border-bottom-color: transparent;
   }
-  /* Cuando sale del hero, vuelve a sólido */
+  /* Apenas se hace scroll, vuelve a sólido */
   .header[data-variant="overlay"].es-solido {
     background: var(--color-bg-page);
     color: var(--color-text-primary);
@@ -227,7 +227,7 @@ const consultar = whatsappUrl("Hola, quiero hacer una consulta.");
     .submenu ul a:hover {
       background: var(--color-bg-hover);
     }
-        /* Opción sin página todavía: visible pero deshabilitada */
+    /* Opción sin página todavía: visible pero deshabilitada */
     .submenu .no-disponible {
       display: flex;
       align-items: center;
@@ -237,24 +237,27 @@ const consultar = whatsappUrl("Hola, quiero hacer una consulta.");
       color: var(--color-action-on-disabled);
       cursor: default;
     }
-    .pronto { font-family: var(--font-mono); font-size: var(--text-data-eyebrow); text-transform: uppercase; letter-spacing: 0.06em; }
+    .pronto {
+      font-family: var(--font-mono);
+      font-size: var(--text-data-eyebrow);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
   }
 </style>
 
 <script>
   // Este script se ejecuta en el navegador. Astro lo empaqueta y lo carga una sola vez.
   const header = document.querySelector<HTMLElement>("[data-header]");
-  const hero = document.querySelector("[data-hero]");
 
   if (header) {
-    // 1. Overlay → sólido: observamos el hero y cambiamos cuando deja de verse.
-    if (header.dataset.variant === "overlay" && hero) {
-      const observer = new IntersectionObserver(
-        ([entrada]) =>
-          header.classList.toggle("es-solido", !entrada.isIntersecting),
-        { rootMargin: `-${header.offsetHeight}px 0px 0px 0px` },
-      );
-      observer.observe(hero);
+    // 1. Overlay → sólido: apenas la página se mueve, el header pasa a fondo blanco.
+    //    Así el contenido del hero nunca queda visible por detrás del menú.
+    if (header.dataset.variant === "overlay") {
+      const actualizarFondo = () =>
+        header.classList.toggle("es-solido", window.scrollY > 8);
+      actualizarFondo(); // por si la página se abre ya scrolleada (al volver atrás)
+      window.addEventListener("scroll", actualizarFondo, { passive: true });
     }
 
     // 2. Mobile: esconder al bajar, mostrar al subir.
@@ -264,6 +267,7 @@ const consultar = whatsappUrl("Hola, quiero hacer una consulta.");
       "scroll",
       () => {
         const actual = window.scrollY;
+        // Durante la transición de la portada (data-animando) el header no se esconde
         const animando = document.documentElement.hasAttribute("data-animando");
         const bajando = actual > ultimoScroll && actual > 200 && !animando;
         header.classList.toggle("oculto", mobile.matches && bajando);
